@@ -8,6 +8,150 @@ import (
 )
 
 /*
+DNA
+
+Deoxyribonucleic acid (DNA) is a chemical found in the nucleus of cells and carries the "instructions" for the development and functioning of living organisms.
+
+If you want to know more: http://en.wikipedia.org/wiki/DNA
+
+In DNA strings, symbols "A" and "T" are complements of each other, as "C" and "G".
+Your function receives one side of the DNA (string, except for Haskell); you need to return the other complementary side.
+DNA strand is never empty or there is no DNA at all (again, except for Haskell).
+
+More similar exercise are found here: http://rosalind.info/problems/list-view/ (source)
+
+Example: (input --> output)
+
+"ATTGC" --> "TAACG"
+"GTAT" --> "CATA"
+*/
+func DNAStrand(dna string) (result string) {
+	for _, v := range dna {
+		switch string(v) {
+		case "A":
+			result += "T"
+		case "T":
+			result += "A"
+		case "C":
+			result += "G"
+		case "G":
+			result += "C"
+		default:
+			result += string(v)
+		}
+	}
+	return
+}
+
+/*
+Shortest Word
+
+Simple, given a string of words, return the length of the shortest word(s).
+
+String will never be empty and you do not need to account for different data types.
+*/
+func FindShort(s string) (result int) {
+	result = math.MaxInt32
+	for _, word := range strings.Split(s, " ") {
+		if len(word) <= result {
+			result = len(word)
+		}
+	}
+	return
+}
+
+/*
+Jaden Casing
+
+Jaden Smith, the son of Will Smith, is the star of films such as The Karate Kid (2010) and After Earth (2013).
+Jaden is also known for some of his philosophy that he delivers via Twitter. When writing on Twitter,
+he is known for almost always capitalizing every word. For simplicity, you'll have to capitalize each word,
+check out how contractions are expected to be in the example below.
+
+Your task is to convert strings to how they would be written by Jaden Smith.
+The strings are actual quotes from Jaden Smith, but they are not capitalized in the same way he originally typed them.
+
+Example:
+
+Not Jaden-Cased: "How can mirrors be real if our eyes aren't real"
+Jaden-Cased:     "How Can Mirrors Be Real If Our Eyes Aren't Real"
+Link to Jaden's former Twitter account @officialjaden via archive.org
+*/
+func ToJadenCase(str string) string {
+	var words []string
+	for _, word := range strings.Split(str, " ") {
+		wordJadenCased := strings.ToUpper(string(word[0])) + string(word[1:])
+		words = append(words, wordJadenCased)
+	}
+	return strings.Join(words, " ")
+}
+
+/*
+Mumbling
+
+This time no story, no theory. The examples below show you how to write function accum:
+
+Examples:
+accum("abcd") -> "A-Bb-Ccc-Dddd"
+accum("RqaEzty") -> "R-Qq-Aaa-Eeee-Zzzzz-Tttttt-Yyyyyyy"
+accum("cwAt") -> "C-Ww-Aaa-Tttt"
+The parameter of accum is a string which includes only letters from a..z and A..Z.
+*/
+func Accum(s string) (result string) {
+	length := 1
+	for j, v := range s {
+		for i := 0; i < length; i++ {
+			if i == 0 {
+				result += strings.ToUpper(string(v))
+			} else {
+				result += strings.ToLower(string(v))
+			}
+		}
+		if j+1 < len(s) {
+			result += "-"
+		}
+		length += 1
+
+	}
+	return
+}
+
+/*
+Middle Character
+
+You are going to be given a word. Your job is to return the middle character of the word.
+If the word's length is odd, return the middle character.
+If the word's length is even, return the middle 2 characters.
+
+#Examples:
+
+Kata.getMiddle("test") should return "es"
+
+Kata.getMiddle("testing") should return "t"
+
+Kata.getMiddle("middle") should return "dd"
+
+Kata.getMiddle("A") should return "A"
+
+#Input
+
+A word (string) of length 0 < str < 1000 (In javascript you may get slightly more than 1000 in some test cases due to an error in the test cases). You do not need to test for this. This is only here to tell you that you do not need to worry about your solution timing out.
+
+#Output
+
+The middle character(s) of the word represented as a string.
+*/
+func GetMiddle(s string) (middle string) {
+	pos := len(s) / 2
+	if len(s)%2 != 0 {
+		middle = s[pos : pos+1]
+	} else {
+		middle = s[pos-1 : pos+1]
+	}
+	return
+}
+
+/*
 Highest Lowest
 
 In this little assignment you are given a string of space separated numbers, and have to return the highest and lowest number.
@@ -22,9 +166,8 @@ There will always be at least one number in the input string.
 Output string must be two numbers separated by a single space, and highest number is first.
 */
 func HighAndLow(in string) string {
-	fmt.Println("Input: " + in)
 	lowest := math.MaxInt32
-	highest := 0
+	highest := math.MinInt32
 	for _, s := range strings.Split(in, " ") {
 		intValue, err := strconv.Atoi(s)
 		if err == nil {

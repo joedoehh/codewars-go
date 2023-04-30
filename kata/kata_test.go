@@ -7,6 +7,57 @@ import (
 	"codewars-go/kata"
 )
 
+var _ = Describe("Kata DNA", func() {
+	It("Basic Tests", func() {
+		Expect(kata.DNAStrand("AAAA")).To(Equal("TTTT"))
+		Expect(kata.DNAStrand("ATTGC")).To(Equal("TAACG"))
+		Expect(kata.DNAStrand("GTAT")).To(Equal("CATA"))
+	})
+})
+
+var _ = Describe("Kata Shortest Word", func() {
+	It("should test that the solution returns the correct value", func() {
+		Expect(kata.FindShort("bitcoin take over the world maybe who knows perhaps")).To(Equal(3))
+		Expect(kata.FindShort("turns out random test cases are easier than writing out basic ones")).To(Equal(3))
+		Expect(kata.FindShort("Let's travel abroad shall we")).To(Equal(2))
+	})
+})
+
+var _ = Describe("Kata Jaden Casing", func() {
+	It("should work for sample test cases", func() {
+		Expect(kata.ToJadenCase("most trees are blue")).To(Equal("Most Trees Are Blue"))
+		Expect(kata.ToJadenCase("All the rules in this world were made by someone no smarter than you. So make your own.")).To(Equal("All The Rules In This World Were Made By Someone No Smarter Than You. So Make Your Own."))
+		Expect(kata.ToJadenCase("When I die. then you will realize")).To(Equal("When I Die. Then You Will Realize"))
+		Expect(kata.ToJadenCase("Jonah Hill is a genius")).To(Equal("Jonah Hill Is A Genius"))
+		Expect(kata.ToJadenCase("Dying is mainstream")).To(Equal("Dying Is Mainstream"))
+	})
+})
+
+var _ = Describe("Kata Mumbling", func() {
+
+	It("should handle basic cases", func() {
+		doTestAccum("ZpglnRxqenU", "Z-Pp-Ggg-Llll-Nnnnn-Rrrrrr-Xxxxxxx-Qqqqqqqq-Eeeeeeeee-Nnnnnnnnnn-Uuuuuuuuuuu")
+		doTestAccum("NyffsGeyylB", "N-Yy-Fff-Ffff-Sssss-Gggggg-Eeeeeee-Yyyyyyyy-Yyyyyyyyy-Llllllllll-Bbbbbbbbbbb")
+		doTestAccum("MjtkuBovqrU", "M-Jj-Ttt-Kkkk-Uuuuu-Bbbbbb-Ooooooo-Vvvvvvvv-Qqqqqqqqq-Rrrrrrrrrr-Uuuuuuuuuuu")
+		doTestAccum("EvidjUnokmM", "E-Vv-Iii-Dddd-Jjjjj-Uuuuuu-Nnnnnnn-Oooooooo-Kkkkkkkkk-Mmmmmmmmmm-Mmmmmmmmmmm")
+		doTestAccum("HbideVbxncC", "H-Bb-Iii-Dddd-Eeeee-Vvvvvv-Bbbbbbb-Xxxxxxxx-Nnnnnnnnn-Cccccccccc-Ccccccccccc")
+	})
+})
+
+func doTestAccum(s string, exp string) {
+	var ans = kata.Accum(s)
+	Expect(ans).To(Equal(exp))
+}
+
+var _ = Describe("Kata GetMiddle", func() {
+	It("Tests", func() {
+		Expect(kata.GetMiddle("test")).To(Equal("es"))
+		Expect(kata.GetMiddle("testing")).To(Equal("t"))
+		Expect(kata.GetMiddle("middle")).To(Equal("dd"))
+		Expect(kata.GetMiddle("A")).To(Equal("A"))
+	})
+})
+
 var _ = Describe("Kata High And Low", func() {
 	It("should test that the solution returns the correct value", func() {
 		Expect(kata.HighAndLow("8 3 -5 42 -1 0 0 -9 4 7 4 -4")).To(Equal("42 -9"))
