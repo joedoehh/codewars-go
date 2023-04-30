@@ -7,6 +7,52 @@ import (
 	"codewars-go/kata"
 )
 
+var _ = Describe("Kata Printer Errors", func() {
+	It("Kata Printer Errors", func() {
+		Expect(kata.PrinterError("aaaaaaaaaaaaaaaabbbbbbbbbbbbbbbbbbmmmmmmmmmmmmmmmmmmmxyz")).To(Equal("3/56"))
+		Expect(kata.PrinterError("kkkwwwaaaaaaaaaaaaaabbbbbbbbbbbbbbbbbbmmmmmmmmmmmmmmmmmmmxyz")).To(Equal("6/60"))
+		Expect(kata.PrinterError("kkkwwwaaaaaaaaaaaaaabbbbbbbbbbbbbbbbbbmmmmmmmmmmmmmmmmmmmxyzuuuuu")).To(Equal("11/65"))
+	})
+})
+
+var _ = Describe("Kata NextSquare", func() {
+	It("fixed tests", func() {
+		Expect(kata.FindNextSquare(int64(121))).To(Equal(int64(144)))
+		Expect(kata.FindNextSquare(int64(625))).To(Equal(int64(676)))
+		Expect(kata.FindNextSquare(int64(319225))).To(Equal(int64(320356)))
+		Expect(kata.FindNextSquare(int64(15241383936))).To(Equal(int64(15241630849)))
+		Expect(kata.FindNextSquare(int64(155))).To(Equal(int64(-1)))
+	})
+})
+
+var _ = Describe("Kata Two To One", func() {
+	It("fixed tests", func() {
+		Expect(kata.TwoToOne("aretheyhere", "yestheyarehere")).To(Equal("aehrsty"))
+		Expect(kata.TwoToOne("loopingisfunbutdangerous", "lessdangerousthancoding")).To(Equal("abcdefghilnoprstu"))
+	})
+})
+
+var _ = Describe("Kata GetSum", func() {
+	It("Sample tests", func() {
+		Expect(kata.GetSum(0, 1)).To(Equal(1))
+		Expect(kata.GetSum(1, 2)).To(Equal(3))
+		Expect(kata.GetSum(5, -1)).To(Equal(14))
+		Expect(kata.GetSum(505, 4)).To(Equal(127759))
+		Expect(kata.GetSum(321, 123)).To(Equal(44178))
+		Expect(kata.GetSum(0, -1)).To(Equal(-1))
+		Expect(kata.GetSum(-50, 0)).To(Equal(-1275))
+		Expect(kata.GetSum(-1, -5)).To(Equal(-15))
+		Expect(kata.GetSum(-5, -5)).To(Equal(-5))
+		Expect(kata.GetSum(-505, 4)).To(Equal(-127755))
+		Expect(kata.GetSum(-321, 123)).To(Equal(-44055))
+		Expect(kata.GetSum(0, 0)).To(Equal(0))
+		Expect(kata.GetSum(-5, -1)).To(Equal(-15))
+		Expect(kata.GetSum(5, 1)).To(Equal(15))
+		Expect(kata.GetSum(-17, -17)).To(Equal(-17))
+		Expect(kata.GetSum(17, 17)).To(Equal(17))
+	})
+})
+
 var _ = Describe("Kata DNA", func() {
 	It("Basic Tests", func() {
 		Expect(kata.DNAStrand("AAAA")).To(Equal("TTTT"))

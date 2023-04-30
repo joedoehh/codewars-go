@@ -7,6 +7,186 @@ import (
 	"strings"
 )
 
+// 6 kyu -----------------------------------------------------------------------------------------
+
+/*
+Millipede of words
+
+The set of words is given. Words are joined if the last letter of one word and the first letter of another word are the same.
+Return true if all words of the set can be combined into one word. Each word can and must be used only once. Otherwise return false.
+
+Input
+Array of 3 to 7 words of random length. No capital letters.
+
+Example true
+Set: excavate, endure, desire, screen, theater, excess, night.
+Millipede: desirE EndurE ExcavatE ExcesS ScreeN NighT Theater.
+
+Example false
+Set: trade, pole, view, grave, ladder, mushroom, president.
+Millipede: presidenT Trade.
+*/
+func Millipede(words []string) bool {
+	return millipede("", words, 0, len(words))
+}
+
+func millipede(sentence string, words []string, wordsUsed, totalNrOfWords int) (result bool) {
+	if len(words) == 0 && wordsUsed == totalNrOfWords {
+		return true
+	}
+	for _, word := range words {
+		if fits(sentence, word) {
+			result = millipede(sentence+" "+word, dropFirstOccurence(word, words), wordsUsed+1, totalNrOfWords)
+			if result {
+				return
+			}
+		}
+	}
+	return false
+}
+
+func dropFirstOccurence(word string, words []string) (result []string) {
+	droppingMode := true
+	for _, nextWord := range words {
+		if word == nextWord {
+			if droppingMode {
+				droppingMode = false
+			} else {
+				result = append(result, nextWord)
+			}
+		} else {
+			result = append(result, nextWord)
+		}
+	}
+	return
+}
+
+func fits(sentence, word string) bool {
+	if sentence == "" {
+		return true
+	}
+	sentenceRune := []rune(sentence)
+	wordRune := []rune(word)
+	return sentenceRune[len(sentenceRune)-1] == wordRune[0]
+}
+
+// 7 kyu -----------------------------------------------------------------------------------------
+
+/*
+Printer Errors
+
+In a factory a printer prints labels for boxes. For one kind of boxes the printer has to use colors which,
+for the sake of simplicity, are named with letters from a to m.
+
+The colors used by the printer are recorded in a control string. For example a "good" control string would be
+aaabbbbhaijjjm meaning that the printer used three times color a, four times color b, one time color h then one time color a...
+
+Sometimes there are problems: lack of colors, technical malfunction and a "bad" control string is produced
+e.g. aaaxbbbbyyhwawiwjjjwwm with letters not from a to m.
+
+You have to write a function printer_error which given a string will return the error rate of the printer as a
+string representing a rational whose numerator is the number of errors and the denominator the length of the control string.
+Don't reduce this fraction to a simpler expression.
+
+The string has a length greater or equal to one and contains only letters from a to z.
+
+Examples:
+s="aaabbbbhaijjjm"
+printer_error(s) => "0/14"
+
+s="aaaxbbbbyyhwawiwjjjwwm"
+printer_error(s) => "8/22"
+*/
+func PrinterError(s string) string {
+	errors := 0
+	for _, c := range s {
+		if !strings.Contains("abcdedfghijklm", string(c)) {
+			errors += 1
+		}
+	}
+	return fmt.Sprint(errors, "/", len(s))
+}
+
+/*
+Perfect Square
+
+You might know some pretty large perfect squares. But what about the NEXT one?
+
+Complete the findNextSquare method that finds the next integral perfect square after the one passed as a parameter.
+Recall that an integral perfect square is an integer n such that sqrt(n) is also an integer.
+
+If the parameter is itself not a perfect square then -1 should be returned. You may assume the parameter is non-negative.
+
+Examples:(Input --> Output)
+
+121 --> 144
+625 --> 676
+114 --> -1 since 114 is not a perfect square
+*/
+func FindNextSquare(sq int64) int64 {
+	sqrt := math.Sqrt(float64(sq))
+	sqFloor := math.Floor(sqrt)
+	if float64(sq) != math.Pow(sqFloor, 2) {
+		// special case: check if sq is not perfect square
+		return -1
+	} else {
+		// return next perfect square
+		return int64(math.Pow(sqFloor+1.0, 2))
+	}
+}
+
+/*
+Two to One
+
+Take 2 strings s1 and s2 including only letters from a to z.
+Return a new sorted string, the longest possible, containing distinct letters - each taken only once - coming from s1 or s2.
+
+Examples:
+a = "xyaabbbccccdefww"
+b = "xxxxyyyyabklmopq"
+longest(a, b) -> "abcdefklmopqwxy"
+
+a = "abcdefghijklmnopqrstuvwxyz"
+longest(a, a) -> "abcdefghijklmnopqrstuvwxyz"
+*/
+func TwoToOne(s1 string, s2 string) (result string) {
+	for _, c := range "abcdefghijklmnopqrstuvwxyz" {
+		if strings.Contains(s1, string(c)) || strings.Contains(s2, string(c)) {
+			result += string(c)
+		}
+	}
+	return
+}
+
+/*
+Sum Of Numbers
+
+Given two integers a and b, which can be positive or negative, find the sum of all the integers between and including them and return it. If the two numbers are equal return a or b.
+
+Note: a and b are not ordered!
+
+Examples (a, b) --> output (explanation)
+(1, 0) --> 1 (1 + 0 = 1)
+(1, 2) --> 3 (1 + 2 = 3)
+(0, 1) --> 1 (0 + 1 = 1)
+(1, 1) --> 1 (1 since both are same)
+(-1, 0) --> -1 (-1 + 0 = -1)
+(-1, 2) --> 2 (-1 + 0 + 1 + 2 = 2)
+
+Your function should only return a number, not the explanation about how you get that number.
+*/
+func GetSum(a, b int) (sum int) {
+	// order interval
+	if a > b {
+		a, b = b, a
+	}
+	// iterate and sum up
+	for i := a; i <= b; i++ {
+		sum += i
+	}
+	return
+}
+
 /*
 DNA
 
@@ -227,67 +407,6 @@ func GetCount(str string) (count int) {
 }
 
 /*
-Millipede of words
-
-The set of words is given. Words are joined if the last letter of one word and the first letter of another word are the same.
-Return true if all words of the set can be combined into one word. Each word can and must be used only once. Otherwise return false.
-
-Input
-Array of 3 to 7 words of random length. No capital letters.
-
-Example true
-Set: excavate, endure, desire, screen, theater, excess, night.
-Millipede: desirE EndurE ExcavatE ExcesS ScreeN NighT Theater.
-
-Example false
-Set: trade, pole, view, grave, ladder, mushroom, president.
-Millipede: presidenT Trade.
-*/
-func Millipede(words []string) bool {
-	return millipede("", words, 0, len(words))
-}
-
-func millipede(sentence string, words []string, wordsUsed, totalNrOfWords int) (result bool) {
-	if len(words) == 0 && wordsUsed == totalNrOfWords {
-		return true
-	}
-	for _, word := range words {
-		if fits(sentence, word) {
-			result = millipede(sentence+" "+word, dropFirstOccurence(word, words), wordsUsed+1, totalNrOfWords)
-			if result {
-				return
-			}
-		}
-	}
-	return false
-}
-
-func dropFirstOccurence(word string, words []string) (result []string) {
-	droppingMode := true
-	for _, nextWord := range words {
-		if word == nextWord {
-			if droppingMode {
-				droppingMode = false
-			} else {
-				result = append(result, nextWord)
-			}
-		} else {
-			result = append(result, nextWord)
-		}
-	}
-	return
-}
-
-func fits(sentence, word string) bool {
-	if sentence == "" {
-		return true
-	}
-	sentenceRune := []rune(sentence)
-	wordRune := []rune(word)
-	return sentenceRune[len(sentenceRune)-1] == wordRune[0]
-}
-
-/*
 Sum Of Odd Numbers
 Given the triangle of consecutive odd numbers:
 
@@ -497,6 +616,8 @@ Make a function that will return a greeting statement that uses an input; your p
 func Greet(name string) string {
 	return fmt.Sprintf("Hello, %s how are you doing today?", name)
 }
+
+// 8 kyu -----------------------------------------------------------------------------------------
 
 /*
 Smallest Integer
