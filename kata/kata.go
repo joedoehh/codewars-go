@@ -2,8 +2,86 @@ package kata
 
 import (
 	"fmt"
+	"math"
+	"strconv"
 	"strings"
 )
+
+/*
+Highest Lowest
+
+In this little assignment you are given a string of space separated numbers, and have to return the highest and lowest number.
+
+Examples
+HighAndLow("1 2 3 4 5")  // return "5 1"
+HighAndLow("1 2 -3 4 5") // return "5 -3"
+HighAndLow("1 9 3 4 -5") // return "9 -5"
+Notes
+All numbers are valid Int32, no need to validate them.
+There will always be at least one number in the input string.
+Output string must be two numbers separated by a single space, and highest number is first.
+*/
+func HighAndLow(in string) string {
+	fmt.Println("Input: " + in)
+	lowest := math.MaxInt32
+	highest := 0
+	for _, s := range strings.Split(in, " ") {
+		intValue, err := strconv.Atoi(s)
+		if err == nil {
+			if intValue <= lowest {
+				lowest = intValue
+			}
+			if intValue >= highest {
+				highest = intValue
+			}
+		}
+	}
+	return fmt.Sprint(highest) + " " + fmt.Sprint(lowest)
+}
+
+/*
+Disemvowel Trolls
+
+Trolls are attacking your comment section!
+
+A common way to deal with this situation is to remove all of the vowels from the trolls' comments, neutralizing the threat.
+
+Your task is to write a function that takes a string and return a new string with all vowels removed.
+
+For example, the string "This website is for losers LOL!" would become "Ths wbst s fr lsrs LL!".
+
+Note: for this kata y isn't considered a vowel.
+*/
+func Disemvowel(comment string) (disemvoweld string) {
+	for _, v := range comment {
+		lowerV := strings.ToLower(string(v))
+		switch lowerV {
+		case "a", "e", "i", "o", "u":
+		default:
+			disemvoweld = disemvoweld + string(v)
+		}
+	}
+	return disemvoweld
+}
+
+/*
+Vowel Count
+
+Return the number (count) of vowels in the given string.
+
+We will consider a, e, i, o, u as vowels for this Kata (but not y).
+
+The input string will only consist of lower case letters and/or spaces.
+*/
+func GetCount(str string) (count int) {
+	characters := []rune(str)
+	for _, v := range characters {
+		if v == 'a' || v == 'e' || v == 'i' || v == 'o' || v == 'u' {
+			count += 1
+		}
+	}
+	return count
+}
 
 /*
 Millipede of words

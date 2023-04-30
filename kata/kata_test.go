@@ -7,6 +7,27 @@ import (
 	"codewars-go/kata"
 )
 
+var _ = Describe("Kata High And Low", func() {
+	It("should test that the solution returns the correct value", func() {
+		Expect(kata.HighAndLow("8 3 -5 42 -1 0 0 -9 4 7 4 -4")).To(Equal("42 -9"))
+	})
+	It("test 2", func() {
+		Expect(kata.HighAndLow("1 2 3")).To(Equal("3 1"))
+	})
+})
+
+var _ = Describe("Kata Disemvowel", func() {
+	It("should test that the solution returns the correct value", func() {
+		Expect(kata.Disemvowel("This website is for losers LOL!")).To(Equal("Ths wbst s fr lsrs LL!"))
+	})
+})
+
+var _ = Describe("Kata Vowel Count", func() {
+	It("should test that the solution returns the correct value", func() {
+		Expect(kata.GetCount("abracadabra")).To(Equal(5))
+	})
+})
+
 var _ = Describe("Kata Millipede Example tests", func() {
 	It("Should return true", func() {
 		Expect(kata.Millipede([]string{"excavate", "endure", "screen", "desire", "theater", "excess", "night"})).To(Equal(true))
