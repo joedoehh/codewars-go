@@ -7,6 +7,70 @@ import (
 	"codewars-go/kata"
 )
 
+var _ = Describe("Kata Millipede Example tests", func() {
+	It("Should return true", func() {
+		Expect(kata.Millipede([]string{"excavate", "endure", "screen", "desire", "theater", "excess", "night"})).To(Equal(true))
+	})
+	It("Should return false", func() {
+		Expect(kata.Millipede([]string{"trade", "pole", "view", "grave", "ladder", "mushroom", "president"})).To(Equal(false))
+	})
+	It("Should return false", func() {
+		Expect(kata.Millipede([]string{"extract", "cycle", "trade", "thesis", "effort", "thesis"})).To(Equal(false))
+	})
+})
+
+var _ = Describe("Kata Millipede Fixed tests", func() {
+	It("Five words true", func() {
+		Expect(kata.Millipede([]string{"screen", "desire", "theater", "excess", "night"})).To(Equal(true))
+	})
+	It("One letter words true", func() {
+		Expect(kata.Millipede([]string{"a", "b", "v", "z", "x", "r", "e"})).To(Equal(false))
+	})
+	It("One letter words true", func() {
+		Expect(kata.Millipede([]string{"east", "e", "e", "t", "t", "e", "time"})).To(Equal(true))
+	})
+	It("One more test", func() {
+		Expect(kata.Millipede([]string{"no", "dog", "on", "good"})).To(Equal(false))
+	})
+})
+
+var _ = Describe("Kata Sum Of Odd Numbers", func() {
+	It("Testing for 1", func() { Expect(kata.RowSumOddNumbers(1)).To(Equal(1)) })
+	It("Testing for 2", func() { Expect(kata.RowSumOddNumbers(2)).To(Equal(8)) })
+	It("Testing for 13", func() { Expect(kata.RowSumOddNumbers(13)).To(Equal(2197)) })
+	It("Testing for 19", func() { Expect(kata.RowSumOddNumbers(19)).To(Equal(6859)) })
+	It("Testing for 41", func() { Expect(kata.RowSumOddNumbers(41)).To(Equal(68921)) })
+	It("Testing for 42", func() { Expect(kata.RowSumOddNumbers(42)).To(Equal(74088)) })
+	It("Testing for 74", func() { Expect(kata.RowSumOddNumbers(74)).To(Equal(405224)) })
+	It("Testing for 86", func() { Expect(kata.RowSumOddNumbers(86)).To(Equal(636056)) })
+	It("Testing for 93", func() { Expect(kata.RowSumOddNumbers(93)).To(Equal(804357)) })
+	It("Testing for 101", func() { Expect(kata.RowSumOddNumbers(101)).To(Equal(1030301)) })
+})
+
+var _ = Describe("Kata Cats and shelves", func() {
+	It("Fixed tests", func() {
+		Expect(kata.Cats(1, 5)).To(Equal(2))
+		Expect(kata.Cats(1, 1)).To(Equal(0))
+		Expect(kata.Cats(2, 5)).To(Equal(1))
+		Expect(kata.Cats(2, 4)).To(Equal(2), "Mew")
+	})
+})
+
+var _ = Describe("Kata Factorial", func() {
+	It("basic tests", func() {
+		tests_arr := [...][2]int{
+			{0, 1},
+			{1, 1},
+			{4, 24},
+			{7, 5040},
+			{17, 355687428096000},
+		}
+		for _, v := range tests_arr {
+			Expect(kata.Factorial(v[0])).To(Equal(v[1]))
+		}
+	})
+})
+
 var _ = Describe("Kata Another card game", func() {
 	It("Example tests", func() {
 		Expect(kata.Game([4]int{2, 5, 8, 11}, [4]int{1, 4, 7, 10}, [4]int{0, 3, 6, 9})).To(Equal(true))

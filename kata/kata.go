@@ -6,6 +6,194 @@ import (
 )
 
 /*
+Millipede of words
+
+The set of words is given. Words are joined if the last letter of one word and the first letter of another word are the same.
+Return true if all words of the set can be combined into one word. Each word can and must be used only once. Otherwise return false.
+
+Input
+Array of 3 to 7 words of random length. No capital letters.
+
+Example true
+Set: excavate, endure, desire, screen, theater, excess, night.
+Millipede: desirE EndurE ExcavatE ExcesS ScreeN NighT Theater.
+
+Example false
+Set: trade, pole, view, grave, ladder, mushroom, president.
+Millipede: presidenT Trade.
+*/
+func Millipede(words []string) bool {
+	return millipede("", words, 0, len(words))
+}
+
+func millipede(sentence string, words []string, wordsUsed, totalNrOfWords int) (result bool) {
+	if len(words) == 0 && wordsUsed == totalNrOfWords {
+		return true
+	}
+	for _, word := range words {
+		if fits(sentence, word) {
+			result = millipede(sentence+" "+word, dropFirstOccurence(word, words), wordsUsed+1, totalNrOfWords)
+			if result {
+				return
+			}
+		}
+	}
+	return false
+}
+
+func dropFirstOccurence(word string, words []string) (result []string) {
+	droppingMode := true
+	for _, nextWord := range words {
+		if word == nextWord {
+			if droppingMode {
+				droppingMode = false
+			} else {
+				result = append(result, nextWord)
+			}
+		} else {
+			result = append(result, nextWord)
+		}
+	}
+	return
+}
+
+func fits(sentence, word string) bool {
+	if sentence == "" {
+		return true
+	}
+	sentenceRune := []rune(sentence)
+	wordRune := []rune(word)
+	return sentenceRune[len(sentenceRune)-1] == wordRune[0]
+}
+
+/*
+Sum Of Odd Numbers
+Given the triangle of consecutive odd numbers:
+
+	          1
+	       3     5
+	    7     9    11
+	13    15    17    19
+
+21    23    25    27    29
+...
+Calculate the sum of the numbers in the nth row of this triangle (starting at index 1) e.g.: (Input --> Output)
+
+1 -->  1
+2 --> 3 + 5 = 8
+*/
+func RowSumOddNumbers(n int) int {
+	return rowSumOddNumbers(1, n, 1, []int{n})
+}
+
+func rowSumOddNumbers(currentLevel, targetLevel, lastOddNumber int, row []int) (rowSum int) {
+	if currentLevel == targetLevel {
+		for _, v := range row {
+			rowSum += v
+		}
+		return
+	} else {
+		nextRow := []int{}
+		nextOddNumber := lastOddNumber
+		for i := 0; i < len(row)+1; i++ {
+			nextOddNumber = nextOddNumber + 2
+			nextRow = append(nextRow, nextOddNumber)
+		}
+		return rowSumOddNumbers(currentLevel+1, targetLevel, nextOddNumber, nextRow)
+	}
+}
+
+/*
+Cats and Shelves
+
+Description
+An infinite number of shelves are arranged one above the other in a staggered fashion.
+The cat can jump either one or three shelves at a time:
+from shelf i to shelf i+1 or i+3 (the cat cannot climb on the shelf directly above its head), according to the illustration:
+
+	┌────────┐
+	│-6------│
+	└────────┘
+
+┌────────┐
+│------5-│
+└────────┘  ┌─────► OK!
+
+	│    ┌────────┐
+	│    │-4------│
+	│    └────────┘
+
+┌────────┐  │
+│------3-│  │
+BANG!────┘  ├─────► OK!
+
+	▲  |\_/|  │    ┌────────┐
+	│ ("^-^)  │    │-2------│
+	│ )   (   │    └────────┘
+
+┌─┴─┴───┴┬──┘
+│------1-│
+└────────┘
+Input
+Start and finish shelf numbers (always positive integers, finish no smaller than start)
+
+Task
+Find the minimum number of jumps to go from start to finish
+
+Example
+Start 1, finish 5, then answer is 2 (1 => 4 => 5 or 1 => 2 => 5)
+*/
+func Cats(start, finish int) int {
+	var initialPlatforms []int
+	initialPlatforms = append(initialPlatforms, start)
+	return moveCat(0, finish, initialPlatforms)
+}
+
+func moveCat(level, finish int, currentPlatforms []int) int {
+	if contains(finish, currentPlatforms) {
+		return level
+	} else {
+		var nextCurrentPlatforms []int
+		for _, nextPlatform := range currentPlatforms {
+			if nextPlatform+1 <= finish && !contains(nextPlatform+1, nextCurrentPlatforms) {
+				nextCurrentPlatforms = append(nextCurrentPlatforms, nextPlatform+1)
+			}
+			if nextPlatform+3 <= finish && !contains(nextPlatform+3, nextCurrentPlatforms) {
+				nextCurrentPlatforms = append(nextCurrentPlatforms, nextPlatform+3)
+			}
+		}
+		return moveCat(level+1, finish, nextCurrentPlatforms)
+	}
+}
+
+func contains(platform int, currentPlatforms []int) bool {
+	if currentPlatforms == nil {
+		return false
+	}
+	for _, nextPlatform := range currentPlatforms {
+		if nextPlatform == platform {
+			return true
+		}
+	}
+	return false
+}
+
+/*
+Factorial
+
+Your task is to write function factorial.
+
+https://en.wikipedia.org/wiki/Factorial
+*/
+func Factorial(n int) int {
+	if n == 0 {
+		return 1
+	} else {
+		return n * Factorial(n-1)
+	}
+}
+
+/*
 Another Card Game
 Twelve cards with grades from 0 to 11 randomly divided among 3 players: Frank, Sam, and Tom, 4 cards each. The game consists of 4 rounds.
 The goal of the round is to move by the card with the most points.
@@ -56,11 +244,8 @@ Tip
 Players can actually play DUMB moves, especially Sam and Tom.
 */
 func Game(frank, sam, tom [4]int) bool {
-	fmt.Printf("frank: %v, sam: %v, tom: %v\n", frank, sam, tom)
 	beatingHandSam := beatingHand(frank, sam)
-	fmt.Printf("frank-sam beating cards: %v\n", beatingHandSam)
 	beatingHandTom := beatingHand(frank, tom)
-	fmt.Printf("frank-tom beating cards: %v\n", beatingHandTom)
 	return len(beatingHandSam) >= 2 && len(beatingHandTom) >= 2
 }
 
