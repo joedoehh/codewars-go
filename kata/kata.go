@@ -5,9 +5,248 @@ import (
 	"math"
 	"strconv"
 	"strings"
+	"unicode"
 )
 
 // 6 kyu -----------------------------------------------------------------------------------------
+
+/*
+Prescribe (6 kyu)
+*/
+func Prescribe(d, a, b int) int {
+	// your code here
+}
+
+/*
+IP Validation (6 kyu)
+
+Write an algorithm that will identify valid IPv4 addresses in dot-decimal format.
+IPs should be considered valid if they consist of four octets, with values between 0 and 255, inclusive.
+
+Valid inputs examples:
+Examples of valid inputs:
+1.2.3.4
+123.45.67.89
+
+Invalid input examples:
+1.2.3
+1.2.3.4.5
+123.456.78.90
+123.045.067.089
+Notes:
+
+Leading zeros (e.g. 01.02.03.04) are considered invalid
+
+Inputs are guaranteed to be a single string
+*/
+func Is_valid_ip(ip string) bool {
+	octets := strings.Split(ip, ".")
+	if len(octets) != 4 {
+		return false
+	}
+	for _, o := range octets {
+		isValid := checkOctet(o)
+		if !isValid {
+			return false
+		}
+	}
+	return true
+}
+
+func checkOctet(octet string) bool {
+	u, err := strconv.ParseUint(octet, 10, 32)
+	if err != nil {
+		return false
+	}
+	if octet[0] == '0' && len(octet) > 1 {
+		return false
+	}
+	return 0 <= u && u <= 255
+}
+
+/*
+Mexican Wave (6 kyu)
+
+Task
+In this simple Kata your task is to create a function that turns a string into a Mexican Wave. You will be passed a string and you must return that string in an array where an uppercase letter is a person standing up.
+Rules
+
+ 1. The input string will always be lower case but maybe empty.
+
+ 2. If the character in the string is whitespace then pass over it as if it was an empty seat
+
+    Example
+
+    wave("hello") => []string{"Hello", "hEllo", "heLlo", "helLo", "hellO"}
+
+    Good luck and enjoy!
+*/
+func Wave(words string) (wave []string) {
+	for index, rune := range words {
+		if unicode.IsSpace(rune) {
+			continue
+		}
+		wave = append(wave, standUp(words, index))
+	}
+	return
+}
+
+func standUp(word string, index int) string {
+	return word[:index] + strings.ToUpper(string(word[index])) + word[index+1:]
+}
+
+/*
+Camel Case Again (6 kyu)
+
+Write simple .camelCase method (camel_case function in PHP, CamelCase in C# or camelCase in Java) for strings. All words must have their first letter capitalized without spaces.
+
+For instance:
+
+CamelCase("hello case")      // => "HelloCase"
+CamelCase("camel case word") // => "CamelCaseWord"
+Don't forget to rate this kata! Thanks :)
+*/
+func CamelCase(s string) string {
+	if s == "" {
+		return ""
+	}
+	wordsSplit := strings.Split(s, " ")
+	fmt.Println("splitted: ", wordsSplit)
+	wordsUpper := []string{}
+	for _, word := range wordsSplit {
+		if word == "" {
+			continue
+		}
+		wordUpper := strings.ToUpper(string(word[0])) + string(word[1:])
+		wordsUpper = append(wordsUpper, wordUpper)
+	}
+	return strings.Join(wordsUpper, "")
+}
+
+/*
+Queue (6 kyu)
+There is a queue for the self-checkout tills at the supermarket. Your task is write a function to calculate the total time required for all the customers to check out!
+
+input
+customers: an array of positive integers representing the queue. Each integer represents a customer, and its value is the amount of time they require to check out.
+n: a positive integer, the number of checkout tills.
+output
+The function should return an integer, the total time required.
+
+Important
+Please look at the examples and clarifications below, to ensure you understand the task correctly :)
+
+Examples
+queueTime([5,3,4], 1)
+// should return 12
+// because when there is 1 till, the total time is just the sum of the times
+
+queueTime([10,2,3,3], 2)
+// should return 10
+// because here n=2 and the 2nd, 3rd, and 4th people in the
+// queue finish before the 1st person has finished.
+
+queueTime([2,3,10], 2)
+// should return 12
+Clarifications
+There is only ONE queue serving many tills, and
+The order of the queue NEVER changes, and
+The front person in the queue (i.e. the first element in the array/list) proceeds to a till as soon as it becomes free.
+N.B. You should assume that all the test input will be valid, as specified above.
+
+P.S. The situation in this kata can be likened to the more-computer-science-related idea of a thread pool,
+with relation to running multiple processes at the same time: https://en.wikipedia.org/wiki/Thread_pool
+*/
+func QueueTime(customers []int, n int) (totalTime int) {
+	queues := make([]int, n)
+	for i := 0; i < len(customers); i++ {
+		placed := distribute(customers[i], queues)
+		if !placed {
+			totalTime += wait(queues)
+			i--
+			continue
+		}
+	}
+	for !isEmpty(queues) {
+		totalTime += wait(queues)
+	}
+	return
+}
+
+func distribute(time int, queues []int) (placed bool) {
+	placed = false
+	for i := 0; i < len(queues); i++ {
+		if queues[i] == 0 {
+			queues[i] = time
+			placed = true
+			break
+		}
+	}
+	return
+}
+
+func wait(queues []int) (waitTime int) {
+	// find smallest wait time
+	waitTime = math.MaxInt32
+	for _, time := range queues {
+		if time <= waitTime && time != 0 {
+			waitTime = time
+		}
+	}
+	// adjust by smallest wait time and clear queue
+	for index, time := range queues {
+		if time == waitTime {
+			queues[index] = 0
+		} else if time != 0 {
+			queues[index] -= waitTime
+		}
+	}
+	return
+}
+
+func isEmpty(queues []int) (empty bool) {
+	empty = true
+	for _, time := range queues {
+		if time > 0 {
+			empty = false
+			break
+		}
+	}
+	return
+}
+
+/*
+Prime (6 kyu)
+Define a function that takes an integer argument and returns a logical value true or false depending on if the integer is a prime.
+
+Per Wikipedia, a prime number ( or a prime ) is a natural number greater than 1 that has no positive divisors other than 1 and itself.
+
+Requirements
+You can assume you will be given an integer input.
+You can not assume that the integer will be only positive. You may be given negative numbers as well ( or 0 ).
+NOTE on performance: There are no fancy optimizations required, but still the most trivial solutions might time out.
+Numbers go up to 2^31 ( or similar, depending on language ). Looping all the way up to n, or n/2, will be too slow.
+
+Example
+is_prime(1)  false
+is_prime(2)  true
+is_prime(-1) false
+*/
+func IsPrime(n int) (isPrime bool) {
+	isPrime = true
+	if n <= 1 {
+		isPrime = false
+	} else if n > 2 {
+		limit := int(math.Sqrt(float64(n)))
+		for i := 2; i <= limit; i++ {
+			if n%i == 0 {
+				isPrime = false
+				break
+			}
+		}
+	}
+	return
+}
 
 /*
 Nato Alphabet Encoding (6 kyu)

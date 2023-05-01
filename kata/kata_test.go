@@ -8,6 +8,176 @@ import (
 	"fmt"
 )
 
+var _ = Describe("Tests", func() {
+	It("Example problem", func() {
+		Expect(kata.Prescribe(99, 25, 60)).To(Equal(85))
+	})
+	It("One type needed", func() {
+		Expect(kata.Prescribe(180, 25, 60)).To(Equal(180))
+	})
+	It("Bigger dose", func() {
+		Expect(kata.Prescribe(2575, 150, 400)).To(Equal(2550))
+	})
+	It("Many pills", func() {
+		Expect(kata.Prescribe(4540, 9, 15)).To(Equal(4539))
+	})
+})
+
+var _ = Describe("Test Example", func() {
+	It("should test that 12.255.56.1 is correct", func() {
+		Expect(kata.Is_valid_ip("12.255.56.1")).To(Equal(true))
+	})
+})
+
+var _ = Describe("Test Example", func() {
+	It("should test that '' is uncorrect", func() {
+		Expect(kata.Is_valid_ip("")).To(Equal(false))
+	})
+})
+
+var _ = Describe("Test Example", func() {
+	It("should test that abc.def.ghi.jkl is uncorrect", func() {
+		Expect(kata.Is_valid_ip("abc.def.ghi.jkl")).To(Equal(false))
+	})
+})
+
+var _ = Describe("Test Example", func() {
+	It("should test that 123.456.789.0 is uncorrect", func() {
+		Expect(kata.Is_valid_ip("123.456.789.0")).To(Equal(false))
+	})
+})
+
+var _ = Describe("Test Example", func() {
+	It("should test that 12.34.56 is uncorrect", func() {
+		Expect(kata.Is_valid_ip("12.34.56")).To(Equal(false))
+	})
+})
+
+var _ = Describe("Test Example", func() {
+	It("should test that 12.34.56 .1 is uncorrect", func() {
+		Expect(kata.Is_valid_ip("12.34.56 .1")).To(Equal(false))
+	})
+})
+
+var _ = Describe("Test Example", func() {
+	It("should test that 12.34.56.-1 is uncorrect", func() {
+		Expect(kata.Is_valid_ip("12.34.56.-1")).To(Equal(false))
+	})
+})
+
+var _ = Describe("Test Example", func() {
+	It("should test that 123.045.067.089 is uncorrect", func() {
+		Expect(kata.Is_valid_ip("123.045.067.089")).To(Equal(false))
+	})
+})
+
+var _ = Describe("Test Example", func() {
+	It("should test that 127.1.1.0 is correct", func() {
+		Expect(kata.Is_valid_ip("127.1.1.0")).To(Equal(true))
+	})
+})
+
+var _ = Describe("Test Example", func() {
+	It("should test that 0.0.0.0 is correct", func() {
+		Expect(kata.Is_valid_ip("0.0.0.0")).To(Equal(true))
+	})
+})
+
+var _ = Describe("Test Example", func() {
+	It("should test that 0.34.82.53 is correct", func() {
+		Expect(kata.Is_valid_ip("0.34.82.53")).To(Equal(true))
+	})
+})
+
+var _ = Describe("Test Example", func() {
+	It("should test that 192.168.1.300 is uncorrect", func() {
+		Expect(kata.Is_valid_ip("192.168.1.300")).To(Equal(false))
+	})
+})
+
+var _ = Describe("Kata Wave:", func() {
+	It("should return the correct values", func() {
+		dotestWave(" x yz", []string{" X yz", " x Yz", " x yZ"})
+		dotestWave("abc", []string{"Abc", "aBc", "abC"})
+		dotestWave("abc", []string{"Abc", "aBc", "abC"})
+		dotestWave(" ab  c", []string{" Ab  c", " aB  c", " ab  C"})
+		dotestWave("", []string{})
+		dotestWave("z", []string{"Z"})
+		dotestWave("a a a a a", []string{"A a a a a", "a A a a a", "a a A a a", "a a a A a", "a a a a A"})
+		dotestWave("aaaaa", []string{"Aaaaa", "aAaaa", "aaAaa", "aaaAa", "aaaaA"})
+		dotestWave("                                                           ", []string{})
+		dotestWave(" a  b     c  defghijk l  m no pqrs tuvwx yz     ", []string{" A  b     c  defghijk l  m no pqrs tuvwx yz     ", " a  B     c  defghijk l  m no pqrs tuvwx yz     ", " a  b     C  defghijk l  m no pqrs tuvwx yz     ", " a  b     c  Defghijk l  m no pqrs tuvwx yz     ", " a  b     c  dEfghijk l  m no pqrs tuvwx yz     ", " a  b     c  deFghijk l  m no pqrs tuvwx yz     ", " a  b     c  defGhijk l  m no pqrs tuvwx yz     ", " a  b     c  defgHijk l  m no pqrs tuvwx yz     ", " a  b     c  defghIjk l  m no pqrs tuvwx yz     ", " a  b     c  defghiJk l  m no pqrs tuvwx yz     ", " a  b     c  defghijK l  m no pqrs tuvwx yz     ", " a  b     c  defghijk L  m no pqrs tuvwx yz     ", " a  b     c  defghijk l  M no pqrs tuvwx yz     ", " a  b     c  defghijk l  m No pqrs tuvwx yz     ", " a  b     c  defghijk l  m nO pqrs tuvwx yz     ", " a  b     c  defghijk l  m no Pqrs tuvwx yz     ", " a  b     c  defghijk l  m no pQrs tuvwx yz     ", " a  b     c  defghijk l  m no pqRs tuvwx yz     ", " a  b     c  defghijk l  m no pqrS tuvwx yz     ", " a  b     c  defghijk l  m no pqrs Tuvwx yz     ", " a  b     c  defghijk l  m no pqrs tUvwx yz     ", " a  b     c  defghijk l  m no pqrs tuVwx yz     ", " a  b     c  defghijk l  m no pqrs tuvWx yz     ", " a  b     c  defghijk l  m no pqrs tuvwX yz     ", " a  b     c  defghijk l  m no pqrs tuvwx Yz     ", " a  b     c  defghijk l  m no pqrs tuvwx yZ     "})
+	})
+})
+
+func dotestWave(s string, expected []string) {
+	actual := kata.Wave(s)
+	if len(expected) == 0 {
+		Expect(actual).To(BeEmpty(), "with words = \"%s\"", s)
+	} else {
+		Expect(actual).To(Equal(expected), "with words = \"%s\"", s)
+	}
+}
+
+var _ = Describe("Kata Camel Case", func() {
+	t := [...][2]string{
+		{"test case", "TestCase"},
+		{"camel case method", "CamelCaseMethod"},
+		{"say hello ", "SayHello"},
+		{" camel case word", "CamelCaseWord"},
+		{"", ""},
+		{"Test case", "TestCase"},
+		{" camel case word", "CamelCaseWord"},
+	}
+
+	for _, v := range t {
+		It(fmt.Sprintf("Testing input \"%s\"", v[0]), func() { Expect(kata.CamelCase(v[0])).To(Equal(v[1])) })
+	}
+})
+
+var _ = Describe("Kata Queue", func() {
+	It("Sample tests", func() {
+		Expect(kata.QueueTime([]int{}, 1)).To(Equal(0))
+		Expect(kata.QueueTime([]int{1, 2, 3, 4}, 1)).To(Equal(10))
+		Expect(kata.QueueTime([]int{2, 2, 3, 3, 4, 4}, 2)).To(Equal(9))
+		Expect(kata.QueueTime([]int{1, 2, 3, 4, 5}, 100)).To(Equal(5))
+	})
+})
+
+var _ = Describe("Kata Prime", func() {
+	It("Basic tests", func() {
+		doTestPrime(0, false)
+		doTestPrime(1, false)
+		doTestPrime(2, true)
+		doTestPrime(73, true)
+		doTestPrime(75, false)
+		doTestPrime(-1, false)
+	})
+
+	It("Test prime", func() {
+		doTestPrime(3, true)
+		doTestPrime(5, true)
+		doTestPrime(7, true)
+		doTestPrime(41, true)
+		doTestPrime(5099, true)
+	})
+
+	It("Test not prime", func() {
+		doTestPrime(4, false)
+		doTestPrime(6, false)
+		doTestPrime(8, false)
+		doTestPrime(9, false)
+		doTestPrime(45, false)
+		doTestPrime(-5, false)
+		doTestPrime(-8, false)
+		doTestPrime(-41, false)
+	})
+})
+
+func doTestPrime(n int, expected bool) {
+	Expect(kata.IsPrime(n)).To(Equal(expected), "With n = %d", n)
+}
+
 var _ = Describe("Kata Nato", func() {
 	It("Should return a correctly translated string", func() {
 		Expect(kata.ToNato("If you can read")).To(Equal("India Foxtrot Yankee Oscar Uniform Charlie Alfa November Romeo Echo Alfa Delta"))
