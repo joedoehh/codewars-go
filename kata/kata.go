@@ -10,7 +10,140 @@ import (
 // 6 kyu -----------------------------------------------------------------------------------------
 
 /*
-Millipede of words
+Count Bits (6 kyu)
+
+Write a function that takes an integer as input, and returns the number of bits that are equal to one in the binary representation of that number.
+You can guarantee that input is non-negative.
+
+Example: The binary representation of 1234 is 10011010010, so the function should return 5 in this case
+*/
+func CountBits(nr uint) (countedBits int) {
+	for _, v := range fmt.Sprintf("%b", nr) {
+		if v == '1' {
+			countedBits++
+		}
+	}
+	return
+}
+
+/*
+Create Phone Number (6 kyu)
+
+Write a function that accepts an array of 10 integers (between 0 and 9), that returns a string of those numbers in the form of a phone number.
+
+Example
+CreatePhoneNumber([10]uint{1,2,3,4,5,6,7,8,9,0})  // returns "(123) 456-7890"
+The returned format must be correct in order to complete this challenge.
+
+Don't forget the space after the closing parentheses!
+*/
+func CreatePhoneNumber(numbers [10]uint) string {
+	return fmt.Sprintf("(%v) %v-%v", makeNumber(numbers, 0, 3), makeNumber(numbers, 3, 3), makeNumber(numbers, 6, 4))
+}
+
+func makeNumber(numbers [10]uint, start, length int) (substringNr string) {
+	for i := start; i < length+start; i++ {
+		substringNr += fmt.Sprintf("%v", numbers[i])
+	}
+	return
+}
+
+/*
+Find the opdd int (6 kyu)
+
+Given an array of integers, find the one that appears an odd number of times.
+
+There will always be only one integer that appears an odd number of times.
+
+Examples
+[7] should return 7, because it occurs 1 time (which is odd).
+[0] should return 0, because it occurs 1 time (which is odd).
+[1,1,2] should return 2, because it occurs 1 time (which is odd).
+[0,1,0,1,0] should return 0, because it occurs 3 times (which is odd).
+[1,2,2,3,3,3,4,3,3,3,2,2,1] should return 4, because it appears 1 time (which is odd).
+*/
+func FindOdd(seq []int) (occurence int) {
+	// count occurences
+	intToOccurence := map[int]int{}
+	for _, nextInt := range seq {
+		intToOccurence[nextInt] += 1
+	}
+	// return first odd occurence
+	for key, value := range intToOccurence {
+		if value%2 != 0 {
+			occurence = key
+			break
+		}
+	}
+	return
+}
+
+/*
+Stop gninnipS My sdroW! (6 kyu)
+
+Write a function that takes in a string of one or more words, and returns the same string,
+but with all five or more letter words reversed (Just like the name of this Kata).
+
+Strings passed in will consist of only letters and spaces. Spaces will be included only when more than one word is present.
+
+Examples:
+
+spinWords( "Hey fellow warriors" ) => returns "Hey wollef sroirraw"
+spinWords( "This is a test") => returns "This is a test"
+spinWords( "This is another test" )=> returns "This is rehtona test"
+*/
+func SpinWords(str string) string {
+	var words []string
+	for _, word := range strings.Split(str, " ") {
+		if len(word) >= 5 {
+			words = append(words, spin(word))
+		} else {
+			words = append(words, word)
+		}
+	}
+	return strings.Join(words, " ")
+}
+
+func spin(word string) (spinned string) {
+	for i := len(word) - 1; i >= 0; i-- {
+		spinned += string(word[i])
+	}
+	return
+}
+
+/*
+Multiples of 3 and 5 (6 kyu)
+
+If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9. The sum of these multiples is 23.
+
+Finish the solution so that it returns the sum of all the multiples of 3 or 5 below the number passed in.
+Additionally, if the number is negative, return 0 (for languages that do have them).
+
+Note: If the number is a multiple of both 3 and 5, only count it once.
+
+Courtesy of projecteuler.net (Problem 1)
+*/
+func Multiple3And5(number int) (sum int) {
+	// special case handling
+	if number <= 0 {
+		sum = 0
+		return
+	}
+	// enumerate and sum
+	for i := 1; i < number; i++ {
+		if multiple(i, 3) || multiple(i, 5) {
+			sum += i
+		}
+	}
+	return
+}
+
+func multiple(number, divisor int) bool {
+	return number%divisor == 0
+}
+
+/*
+Millipede of words (6 kyu)
 
 The set of words is given. Words are joined if the last letter of one word and the first letter of another word are the same.
 Return true if all words of the set can be combined into one word. Each word can and must be used only once. Otherwise return false.

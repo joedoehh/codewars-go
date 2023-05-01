@@ -5,7 +5,59 @@ import (
 	. "github.com/onsi/gomega"
 
 	"codewars-go/kata"
+	"fmt"
 )
+
+var _ = Describe("Kata CountBits", func() {
+	It("basic tests", func() {
+		Expect(kata.CountBits(0)).To(Equal(0))
+		Expect(kata.CountBits(4)).To(Equal(1))
+		Expect(kata.CountBits(7)).To(Equal(3))
+		Expect(kata.CountBits(9)).To(Equal(2))
+		Expect(kata.CountBits(10)).To(Equal(2))
+	})
+})
+
+var _ = Describe("Kata CreatePhoneNumber", func() {
+	It("basic test", func() {
+		Expect(kata.CreatePhoneNumber([10]uint{1, 2, 3, 4, 5, 6, 7, 8, 9, 0})).To(Equal("(123) 456-7890"))
+	})
+})
+
+var _ = Describe("Kata FindOdd", func() {
+	arr := [...][]int{
+		{20, 1, -1, 2, -2, 3, 3, 5, 5, 1, 2, 4, 20, 4, -1, -2, 5},
+		{1, 1, 2, -2, 5, 2, 4, 4, -1, -2, 5},
+		{20, 1, 1, 2, 2, 3, 3, 5, 5, 4, 20, 4, 5},
+		{10},
+		{1, 1, 1, 1, 1, 1, 10, 1, 1, 1, 1},
+		{5, 4, 3, 2, 1, 5, 4, 3, 2, 10, 10},
+	}
+	sol := [...]int{5, -1, 5, 10, 10, 1}
+	for i, v := range arr {
+		It(fmt.Sprintf("Testing input %v", v), func() { Expect(kata.FindOdd(v)).To(Equal(sol[i])) })
+	}
+})
+
+var _ = Describe("Kata SpinWords", func() {
+	It("should test that the solution returns the correct value for single word inputs", func() {
+		Expect(kata.SpinWords("Welcome")).To(Equal("emocleW"))
+		Expect(kata.SpinWords("to")).To(Equal("to"))
+		Expect(kata.SpinWords("CodeWars")).To(Equal("sraWedoC"))
+	})
+	It("should test that the solution returns the correct value for multiple word outputs", func() {
+		Expect(kata.SpinWords("Hey fellow warriors")).To(Equal("Hey wollef sroirraw"))
+		Expect(kata.SpinWords("Burgers are my favorite fruit")).To(Equal("sregruB are my etirovaf tiurf"))
+		Expect(kata.SpinWords("Pizza is the best vegetable")).To(Equal("azziP is the best elbategev"))
+	})
+})
+
+var _ = Describe("Kata Multipliers 3 and 5", func() {
+
+	It("should handle basic cases", func() {
+		Expect(kata.Multiple3And5(10)).To(Equal(23))
+	})
+})
 
 var _ = Describe("Kata Printer Errors", func() {
 	It("Kata Printer Errors", func() {
