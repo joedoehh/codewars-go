@@ -8,6 +8,20 @@ import (
 	"fmt"
 )
 
+var _ = Describe("Kata CamelCase", func() {
+	It("should handle basic cases", func() {
+		doTestCamelCase("", "")
+		doTestCamelCase("The_Stealth_Warrior", "TheStealthWarrior")
+		doTestCamelCase("the-Stealth-Warrior", "theStealthWarrior")
+	})
+})
+
+func doTestCamelCase(str, exp string) {
+	fmt.Println("input:", str)
+	var ans = kata.ToCamelCase(str)
+	Expect(ans).To(Equal(exp))
+}
+
 var _ = Describe("Kata CountBits", func() {
 	It("basic tests", func() {
 		Expect(kata.CountBits(0)).To(Equal(0))

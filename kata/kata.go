@@ -10,6 +10,40 @@ import (
 // 6 kyu -----------------------------------------------------------------------------------------
 
 /*
+Camel Case (6 kyu)
+
+Complete the method/function so that it converts dash/underscore delimited words into camel casing.
+The first word within the output should be capitalized only if the original word was capitalized
+(known as Upper Camel Case, also often referred to as Pascal case). The next words should be always
+capitalized.
+
+Examples
+"the-stealth-warrior" gets converted to "theStealthWarrior"
+
+"The_Stealth_Warrior" gets converted to "TheStealthWarrior"
+
+"The_Stealth-Warrior" gets converted to "TheStealthWarrior"
+*/
+func ToCamelCase(s string) string {
+	wordsSplit := strings.FieldsFunc(s, splitCamelCase)
+	wordsUpper := []string{}
+	for i, word := range wordsSplit {
+		if i == 0 {
+			wordsUpper[i] = word
+		} else {
+			upper := 
+			word[0] = strings.ToUpper(string(word[0]))[0]
+		}
+
+	}
+	return strings.Join(wordsUpper, "")
+}
+
+func splitCamelCase(r rune) bool {
+    return r == '-' || r == '_'
+}
+
+/*
 Count Bits (6 kyu)
 
 Write a function that takes an integer as input, and returns the number of bits that are equal to one in the binary representation of that number.
@@ -49,7 +83,7 @@ func makeNumber(numbers [10]uint, start, length int) (substringNr string) {
 }
 
 /*
-Find the opdd int (6 kyu)
+Find the odd int (6 kyu)
 
 Given an array of integers, find the one that appears an odd number of times.
 
