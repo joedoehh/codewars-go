@@ -10,6 +10,198 @@ import (
 // 6 kyu -----------------------------------------------------------------------------------------
 
 /*
+Nato Alphabet Encoding (6 kyu)
+
+Task
+You'll have to translate a string to Pilot's alphabet (NATO phonetic alphabet).
+
+Input:
+
+If, you can read?
+
+Output:
+
+India Foxtrot , Yankee Oscar Uniform Charlie Alfa November Romeo Echo Alfa Delta ?
+
+Note:
+
+There are preloaded dictionary you can use, named NATO
+The set of used punctuation is ,.!?.
+Punctuation should be kept in your return string, but spaces should not.
+Xray should not have a dash within.
+Every word and punctuation mark should be seperated by a space ' '.
+There should be no trailing whitespace
+*/
+func ToNato(words string) (encoded string) {
+	for _, rune := range strings.ToUpper(words) {
+		switch rune {
+		case ',', '.', '!', '?':
+			encoded += " " + string(rune)
+		case ' ':
+			encoded += ""
+		default:
+			encoded += " " + natoAlphabet[string(rune)]
+		}
+	}
+	encoded = strings.TrimSpace(encoded)
+	return
+}
+
+var natoAlphabet = map[string]string{
+	"A": "Alfa", "B": "Bravo", "C": "Charlie", "D": "Delta", "E": "Echo",
+	"F": "Foxtrot", "G": "Golf", "H": "Hotel", "I": "India", "J": "Juliett",
+	"K": "Kilo", "L": "Lima", "M": "Mike", "N": "November", "O": "Oscar",
+	"P": "Papa", "Q": "Quebec", "R": "Romeo", "S": "Sierra", "T": "Tango",
+	"U": "Uniform", "V": "Victor", "W": "Whiskey", "X": "X-ray", "Y": "Yankee",
+	"Z": "Zulu",
+}
+
+/*
+Tower Builder (6 kyu)
+
+Build Tower
+Build a pyramid-shaped tower, as an array/list of strings, given a positive integer number of floors. A tower block is represented with "*" character.
+
+For example, a tower with 3 floors looks like this:
+
+[
+
+	"  *  ",
+	" *** ",
+	"*****"
+
+]
+And a tower with 6 floors looks like this:
+
+[
+
+	"     *     ",
+	"    ***    ",
+	"   *****   ",
+	"  *******  ",
+	" ********* ",
+	"***********"
+
+]
+Go challenge Build Tower Advanced once you have finished this :)
+*/
+func TowerBuilder(nFloors int) (tower []string) {
+	tower, _ = towerBuilder(1, nFloors, 1)
+	// reverse tower (base is on top)
+	for i, j := 0, len(tower)-1; i < j; i, j = i+1, j-1 {
+		tower[i], tower[j] = tower[j], tower[i]
+	}
+	return tower
+}
+
+func towerBuilder(level, nFloors, numberOfStars int) (levels []string, baseSize int) {
+	if level == nFloors {
+		baseSize = numberOfStars
+		levels = append(levels, strings.Repeat("*", baseSize))
+		return
+	} else {
+		// get levels below
+		levels, baseSize = towerBuilder(level+1, nFloors, numberOfStars+2)
+		// add current level
+		paddingLength := (baseSize - numberOfStars) / 2
+		levelString := strings.Repeat(" ", paddingLength) + strings.Repeat("*", numberOfStars) + strings.Repeat(" ", paddingLength)
+		levels = append(levels, levelString)
+		return
+	}
+}
+
+/*
+Find Unique Number (6 kyu)
+
+There is an array with some numbers. All numbers are equal except for one. Try to find it!
+
+findUniq([ 1, 1, 1, 2, 1, 1 ]) === 2
+findUniq([ 0, 0, 0.55, 0, 0 ]) === 0.55
+It’s guaranteed that array contains at least 3 numbers.
+
+The tests contain some very huge arrays, so think about performance.
+
+This is the first kata in series:
+
+Find the unique number (this kata)
+Find the unique string
+Find The Unique
+*/
+func FindUniq(arr []float32) (unique float32) {
+	// count occurences
+	occurences := map[float32]int{}
+	for _, next := range arr {
+		occurences[next]++
+	}
+	// return occurence
+	for key, value := range occurences {
+		if value == 1 {
+			unique = key
+			break
+		}
+	}
+	return
+}
+
+/*
+Tortoise Race (6 kyu)
+
+Two tortoises named A and B must run a race. A starts with an average speed of 720 feet per hour. Young B knows she runs faster than A, and furthermore has not finished her cabbage.
+
+When she starts, at last, she can see that A has a 70 feet lead but B's speed is 850 feet per hour. How long will it take B to catch A?
+
+More generally: given two speeds v1 (A's speed, integer > 0) and v2 (B's speed, integer > 0) and a lead g (integer > 0) how long will it take B to catch A?
+
+The result will be an array [hour, min, sec] which is the time needed in hours, minutes and seconds (round down to the nearest second) or a string in some languages.
+
+If v1 >= v2 then return nil, nothing, null, None or {-1, -1, -1} for C++, C, Go, Nim, Pascal, COBOL, Erlang, [-1, -1, -1] for Perl,[] for Kotlin or "-1 -1 -1" for others.
+
+Examples:
+(form of the result depends on the language)
+
+race(720, 850, 70) => [0, 32, 18] or "0 32 18"
+race(80, 91, 37)   => [3, 21, 49] or "3 21 49"
+Note:
+See other examples in "Your test cases".
+
+In Fortran - as in any other language - the returned string is not permitted to contain any redundant trailing whitespace: you can use dynamically allocated character strings.
+
+** Hints for people who don't know how to convert to hours, minutes, seconds:
+
+Tortoises don't care about fractions of seconds
+Think of calculation by hand using only integers (in your code use or simulate integer division)
+or Google: "convert decimal time to hours minutes seconds"
+*/
+func Race(v1, v2, g int) [3]int {
+	// special case: no race - tortoise 1 i faster anyway
+	if v1 >= v2 {
+		return [3]int{-1, -1, -1}
+	}
+	// simulate second by second (until race is won)
+	v1PosFeet := float64(g)
+	v1FeetPerS := float64(v1) / 60.0 / 60.0
+	v2PosFeet := float64(0)
+	v2FeetPerS := float64(v2) / 60.0 / 60.0
+	second := 0
+	for i := 0; ; i++ {
+		if v2PosFeet >= v1PosFeet {
+			second = i
+			break
+		}
+		v1PosFeet += v1FeetPerS
+		v2PosFeet += v2FeetPerS
+	}
+	// transfer result
+	hours := second / 3600
+	minutes := (second % 3600) / 60
+	seconds := second%60 - 1
+	if seconds < 0 {
+		seconds = 0
+	}
+	return [3]int{hours, minutes, seconds}
+}
+
+/*
 Camel Case (6 kyu)
 
 Complete the method/function so that it converts dash/underscore delimited words into camel casing.
@@ -28,19 +220,22 @@ func ToCamelCase(s string) string {
 	wordsSplit := strings.FieldsFunc(s, splitCamelCase)
 	wordsUpper := []string{}
 	for i, word := range wordsSplit {
+		var wordUpper string
 		if i == 0 {
-			wordsUpper[i] = word
+			// dont uppercase first word
+			wordUpper = word
 		} else {
-			upper := 
-			word[0] = strings.ToUpper(string(word[0]))[0]
+			// uppercase all other words
+			wordUpper = strings.ToUpper(string(word[0])) + string(word[1:])
 		}
+		wordsUpper = append(wordsUpper, wordUpper)
 
 	}
 	return strings.Join(wordsUpper, "")
 }
 
 func splitCamelCase(r rune) bool {
-    return r == '-' || r == '_'
+	return r == '-' || r == '_'
 }
 
 /*

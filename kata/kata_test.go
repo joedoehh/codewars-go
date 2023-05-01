@@ -8,6 +8,43 @@ import (
 	"fmt"
 )
 
+var _ = Describe("Kata Nato", func() {
+	It("Should return a correctly translated string", func() {
+		Expect(kata.ToNato("If you can read")).To(Equal("India Foxtrot Yankee Oscar Uniform Charlie Alfa November Romeo Echo Alfa Delta"))
+		Expect(kata.ToNato("Did not see that coming")).To(Equal("Delta India Delta November Oscar Tango Sierra Echo Echo Tango Hotel Alfa Tango Charlie Oscar Mike India November Golf"))
+		Expect(kata.ToNato("go for it!")).To(Equal("Golf Oscar Foxtrot Oscar Romeo India Tango !"))
+	})
+})
+
+var _ = Describe("Kata Tower Builder", func() {
+	It("Fixed tests", func() {
+		Expect(kata.TowerBuilder(1)).To(Equal([]string{"*"}))
+		Expect(kata.TowerBuilder(2)).To(Equal([]string{" * ", "***"}))
+		Expect(kata.TowerBuilder(3)).To(Equal([]string{"  *  ", " *** ", "*****"}))
+	})
+})
+
+var _ = Describe("Kata FindUniq", func() {
+	It("should work for some basic cases", func() {
+		Expect(kata.FindUniq([]float32{1.0, 1.0, 1.0, 2.0, 1.0, 1.0})).To(Equal(float32(2)))
+		Expect(kata.FindUniq([]float32{0, 0, 0.55, 0, 0})).To(Equal(float32(0.55)))
+	})
+})
+
+var _ = Describe("Kata Race", func() {
+
+	It("should handle basic cases", func() {
+		doRaceTest(720, 850, 70, [3]int{0, 32, 18})
+		doRaceTest(820, 81, 550, [3]int{-1, -1, -1})
+		doRaceTest(80, 91, 37, [3]int{3, 21, 49})
+	})
+})
+
+func doRaceTest(v1, v2, g int, exp [3]int) {
+	var ans = kata.Race(v1, v2, g)
+	Expect(ans).To(Equal(exp))
+}
+
 var _ = Describe("Kata CamelCase", func() {
 	It("should handle basic cases", func() {
 		doTestCamelCase("", "")
