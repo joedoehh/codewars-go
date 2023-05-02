@@ -9,17 +9,14 @@ import (
 )
 
 var _ = Describe("Tests", func() {
-	It("Example problem", func() {
-		Expect(kata.Prescribe(99, 25, 60)).To(Equal(85))
-	})
-	It("One type needed", func() {
-		Expect(kata.Prescribe(180, 25, 60)).To(Equal(180))
-	})
-	It("Bigger dose", func() {
-		Expect(kata.Prescribe(2575, 150, 400)).To(Equal(2550))
-	})
-	It("Many pills", func() {
-		Expect(kata.Prescribe(4540, 9, 15)).To(Equal(4539))
+	It("Sample tests", func() {
+		Expect(kata.Bell(1)).To(Equal([]int{1}))
+		Expect(kata.Bell(2)).To(Equal([]int{2, 2}))
+		Expect(kata.Bell(3)).To(Equal([]int{3, 4, 3}))
+		Expect(kata.Bell(4)).To(Equal([]int{4, 6, 6, 4}))
+		Expect(kata.Bell(5)).To(Equal([]int{5, 8, 9, 8, 5}))
+		Expect(kata.Bell(6)).To(Equal([]int{6, 10, 12, 12, 10, 6}))
+		Expect(kata.Bell(7)).To(Equal([]int{7, 12, 15, 16, 15, 12, 7}))
 	})
 })
 
