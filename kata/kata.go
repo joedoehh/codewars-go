@@ -8,6 +8,18 @@ import (
 	"unicode"
 )
 
+// 5 kyu -----------------------------------------------------------------------------------------
+
+/*
+King in check
+5 kyu
+https://www.codewars.com/kata/5e28ae347036fa001a504bbe/train/go
+*/
+func KingIsInCheck(board [8][8]rune) bool {
+	//  Do your magic here
+	return false
+}
+
 // 6 kyu -----------------------------------------------------------------------------------------
 
 /*
