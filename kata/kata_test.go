@@ -8,6 +8,19 @@ import (
 	"fmt"
 )
 
+var _ = Describe("DigPow", func() {
+
+	It("should handle basic cases", func() {
+		doTestDigPow(89, 1, 1)
+		doTestDigPow(92, 1, -1)
+	})
+})
+
+func doTestDigPow(n, p int, exp int) {
+	var ans = kata.DigPow(n, p)
+	Expect(ans).To(Equal(exp))
+}
+
 var _ = Describe("Longest Repition", func() {
 	It("it should work with the sample tests", func() {
 		Expect(kata.LongestRepetition("aaaabb")).Should(Equal(kata.Result{'a', 4}))

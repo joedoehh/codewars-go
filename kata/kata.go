@@ -10,9 +10,39 @@ import (
 
 // 6 kyu -----------------------------------------------------------------------------------------
 
-type Result struct {
-	C rune // character
-	L int  // count
+/*
+Playing with digits
+6 kyu
+https://www.codewars.com/kata/5552101f47fc5178b1000050/train/go
+*/
+func DigPow(n, p int) int {
+	pow := computePow(n, p)
+	div := pow / n
+	remainder := pow % n
+	if remainder != 0 {
+		return -1
+	} else {
+		return div
+	}
+}
+
+func computePow(n, p int) int {
+	digits := digits(n)
+	power := p
+	resultFloat := float64(0)
+	for i := 0; i < len(digits); i++ {
+		resultFloat += math.Pow(float64(digits[i]), float64(power))
+		power++
+	}
+	return int(resultFloat)
+}
+
+func digits(n int) (result []int) {
+	asString := strconv.Itoa(n)
+	for _, rune := range asString {
+		result = append(result, int(rune-'0'))
+	}
+	return
 }
 
 /*
@@ -46,6 +76,11 @@ func LongestRepetition(text string) Result {
 		maxChar = currentChar
 	}
 	return Result{maxChar, maxLength}
+}
+
+type Result struct {
+	C rune // character
+	L int  // count
 }
 
 /*
