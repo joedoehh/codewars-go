@@ -10,6 +10,44 @@ import (
 
 // 6 kyu -----------------------------------------------------------------------------------------
 
+type Result struct {
+	C rune // character
+	L int  // count
+}
+
+/*
+Character with longest consecutive repetition
+6 kyu
+https://www.codewars.com/kata/586d6cefbcc21eed7a001155/train/go
+*/
+func LongestRepetition(text string) Result {
+	if len(text) == 0 {
+		return Result{}
+	}
+	textRune := []rune(text)
+	currentLength := 0
+	currentChar := textRune[0]
+	maxLength := 0
+	maxChar := currentChar
+	for _, nextChar := range textRune {
+		if currentChar == nextChar {
+			currentLength++
+		} else {
+			if currentLength > maxLength {
+				maxLength = currentLength
+				maxChar = currentChar
+			}
+			currentChar = nextChar
+			currentLength = 1
+		}
+	}
+	if currentLength > maxLength {
+		maxLength = currentLength
+		maxChar = currentChar
+	}
+	return Result{maxChar, maxLength}
+}
+
 /*
 Bell (6 kyu)
 For whom the Bell tolls

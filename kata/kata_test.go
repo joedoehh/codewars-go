@@ -8,6 +8,18 @@ import (
 	"fmt"
 )
 
+var _ = Describe("Longest Repition", func() {
+	It("it should work with the sample tests", func() {
+		Expect(kata.LongestRepetition("aaaabb")).Should(Equal(kata.Result{'a', 4}))
+		Expect(kata.LongestRepetition("bbbaaabaaaa")).Should(Equal(kata.Result{'a', 4}))
+		Expect(kata.LongestRepetition("cbdeuuu900")).Should(Equal(kata.Result{'u', 3}))
+		Expect(kata.LongestRepetition("abbbbb")).Should(Equal(kata.Result{'b', 5}))
+		Expect(kata.LongestRepetition("aabb")).Should(Equal(kata.Result{'a', 2}))
+		Expect(kata.LongestRepetition("ba")).Should(Equal(kata.Result{'b', 1}))
+		Expect(kata.LongestRepetition("")).Should(Equal(kata.Result{}))
+	})
+})
+
 var _ = Describe("Tests", func() {
 	It("Sample tests", func() {
 		Expect(kata.Bell(1)).To(Equal([]int{1}))
