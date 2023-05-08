@@ -8,6 +8,26 @@ import (
 	"fmt"
 )
 
+var _ = Describe("Transpose", func() {
+	It("Sample tests", func() {
+		Expect(kata.Transpose([][]int{[]int{1}})).To(Equal([][]int{[]int{1}}))
+		Expect(kata.Transpose([][]int{[]int{1, 2, 3}})).To(Equal([][]int{[]int{1}, []int{2}, []int{3}}))
+		Expect(kata.Transpose([][]int{[]int{1, 2, 3}, []int{4, 5, 6}, []int{7, 8, 9}})).To(Equal([][]int{[]int{1, 4, 7}, []int{2, 5, 8}, []int{3, 6, 9}}))
+		Expect(kata.Transpose([][]int{[]int{1, 0, 0}, []int{0, 1, 0}, []int{0, 0, 1}, []int{0, 1, 0}, []int{1, 0, 0}})).To(Equal([][]int{[]int{1, 0, 0, 0, 1}, []int{0, 1, 0, 1, 0}, []int{0, 0, 1, 0, 0}}))
+	})
+})
+
+var _ = Describe("Encrypt", func() {
+	It("Sample Tests", func() {
+		Expect(kata.EncryptThis("")).Should(Equal(""))
+		Expect(kata.EncryptThis("A wise old owl lived in an oak")).Should(Equal("65 119esi 111dl 111lw 108dvei 105n 97n 111ka"))
+		Expect(kata.EncryptThis("The more he saw the less he spoke")).Should(Equal("84eh 109ero 104e 115wa 116eh 108sse 104e 115eokp"))
+		Expect(kata.EncryptThis("The less he spoke the more he heard")).Should(Equal("84eh 108sse 104e 115eokp 116eh 109ero 104e 104dare"))
+		Expect(kata.EncryptThis("Why can we not all be like that wise old bird")).Should(Equal("87yh 99na 119e 110to 97ll 98e 108eki 116tah 119esi 111dl 98dri"))
+		Expect(kata.EncryptThis("Thank you Piotr for all your help")).Should(Equal("84kanh 121uo 80roti 102ro 97ll 121ruo 104ple"))
+	})
+})
+
 var _ = Describe("Number Of Pairs", func() {
 	It("should pass basic tests", func() {
 		Expect(kata.NumberOfPairs([]string{"red", "red"})).To(Equal(1))

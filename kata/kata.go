@@ -11,6 +11,58 @@ import (
 // 6 kyu -----------------------------------------------------------------------------------------
 
 /*
+Matrix Transpose
+6 kyu
+https://www.codewars.com/kata/52fba2a9adcd10b34300094c/train/go
+*/
+func Transpose(matrix [][]int) (result [][]int) {
+	xl := len(matrix[0])
+	yl := len(matrix)
+	result = make([][]int, xl)
+	for i := range result {
+		result[i] = make([]int, yl)
+	}
+	for i := 0; i < xl; i++ {
+		for j := 0; j < yl; j++ {
+			result[i][j] = matrix[j][i]
+		}
+	}
+	return result
+}
+
+/*
+Encrypt this!
+6 kyu
+https://www.codewars.com/kata/5848565e273af816fb000449/train/go
+*/
+func EncryptThis(text string) string {
+	wordsSplit := strings.Split(text, " ")
+	wordsEncrypted := []string{}
+	for _, word := range wordsSplit {
+		wordsEncrypted = append(wordsEncrypted, encryptWord(word))
+	}
+	return strings.Join(wordsEncrypted, " ")
+}
+
+func encryptWord(text string) string {
+	runes := []rune(text)
+	if len(text) == 0 {
+		return ""
+	} else if len(runes) == 1 {
+		return toAscii(runes[0])
+	} else if len(runes) == 2 {
+		return toAscii(runes[0]) + string(runes[1])
+	} else if len(runes) == 3 {
+		return toAscii(runes[0]) + string(runes[2]) + string(runes[1])
+	} else {
+		return toAscii(runes[0]) + string(runes[len(runes)-1]) + string(runes[2:len(runes)-1]) + string(runes[1])
+	}
+}
+func toAscii(r rune) string {
+	return strconv.Itoa(int(r))
+}
+
+/*
 Pair Of Gloves
 6 kyu
 https://www.codewars.com/kata/58235a167a8cb37e1a0000db/train/go
