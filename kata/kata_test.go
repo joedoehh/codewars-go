@@ -8,6 +8,16 @@ import (
 	"fmt"
 )
 
+var _ = Describe("Number Of Pairs", func() {
+	It("should pass basic tests", func() {
+		Expect(kata.NumberOfPairs([]string{"red", "red"})).To(Equal(1))
+		Expect(kata.NumberOfPairs([]string{"red", "green", "blue"})).To(Equal(0))
+		Expect(kata.NumberOfPairs([]string{"gray", "black", "purple", "purple", "gray", "black"})).To(Equal(3))
+		Expect(kata.NumberOfPairs([]string{})).To(Equal(0))
+		Expect(kata.NumberOfPairs([]string{"red", "green", "blue", "blue", "red", "green", "red", "red", "red"})).To(Equal(4))
+	})
+})
+
 var _ = Describe("DigPow", func() {
 
 	It("should handle basic cases", func() {

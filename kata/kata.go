@@ -11,6 +11,31 @@ import (
 // 6 kyu -----------------------------------------------------------------------------------------
 
 /*
+Pair Of Gloves
+6 kyu
+https://www.codewars.com/kata/58235a167a8cb37e1a0000db/train/go
+*/
+func NumberOfPairs(gloves []string) (result int) {
+	colorToNumber := make(map[string]int)
+	for _, glove := range gloves {
+		oldValue, contained := colorToNumber[glove]
+		if !contained {
+			oldValue = 0
+		}
+		oldValue++
+		colorToNumber[glove] = oldValue
+	}
+	for _, number := range colorToNumber {
+		if number%2 == 0 {
+			result += number / 2
+		} else if (number-1)%2 == 0 {
+			result += (number - 1) / 2
+		}
+	}
+	return
+}
+
+/*
 Playing with digits
 6 kyu
 https://www.codewars.com/kata/5552101f47fc5178b1000050/train/go
