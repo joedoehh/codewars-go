@@ -11,6 +11,54 @@ import (
 // 5 kyu -----------------------------------------------------------------------------------------
 
 /*
+Prime in numbers
+5 kyu
+https://www.codewars.com/kata/54d512e62a5e54c96200019e/train/go
+*/
+func PrimeFactors(n int) (result string) {
+	result = ""
+	primeNumbers := primeFactors(n)
+	lastNumber := 0
+	for _, p := range primeNumbers {
+		if p == lastNumber {
+			continue
+		}
+		lastNumber = p
+		occurences := occurences(primeNumbers, p)
+		if occurences == 1 {
+			result += "(" + strconv.Itoa(p) + ")"
+		} else {
+			result += "(" + strconv.Itoa(p) + "**" + strconv.Itoa(occurences) + ")"
+		}
+	}
+	return
+}
+
+func primeFactors(number int) (result []int) {
+	result = make([]int, 0)
+	for i := 2; i <= number/i; i++ {
+		for number%i == 0 {
+			result = append(result, i)
+			number /= i
+		}
+	}
+	if number > 1 {
+		result = append(result, number)
+	}
+	return
+}
+
+func occurences(numbers []int, number int) (result int) {
+	result = 0
+	for i := 0; i < len(numbers); i++ {
+		if numbers[i] == number {
+			result += 1
+		}
+	}
+	return
+}
+
+/*
 RGB to hex conversion
 5 kyu
 https://www.codewars.com/kata/513e08acc600c94f01000001/train/go

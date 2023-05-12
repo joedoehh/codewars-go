@@ -8,6 +8,21 @@ import (
 	"fmt"
 )
 
+// prime in numbers ----------------------------------
+
+func dotest(n int, exp string) {
+	var ans = kata.PrimeFactors(n)
+	Expect(ans).To(Equal(exp))
+}
+
+var _ = Describe("ConvertFracts", func() {
+	It("prime in numbers tests", func() {
+		dotest(7775460, "(2**2)(3**3)(5)(7)(11**2)(17)")
+		dotest(79340, "(2**2)(5)(3967)")
+
+	})
+})
+
 // rgb conversion ----------------------------------
 
 var _ = Describe("RGB conversion", func() {
