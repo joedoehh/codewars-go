@@ -11,6 +11,29 @@ import (
 // 5 kyu -----------------------------------------------------------------------------------------
 
 /*
+RGB to hex conversion
+5 kyu
+https://www.codewars.com/kata/513e08acc600c94f01000001/train/go
+*/
+func RGB(r, g, b int) string {
+	return rgb(r) + rgb(g) + rgb(b)
+}
+
+func rgb(value int) string {
+	if value <= 0 {
+		return "00"
+	} else if value >= 255 {
+		return "FF"
+	} else {
+		hex := fmt.Sprintf("%X", value)
+		if len(hex) == 1 {
+			hex = "0" + hex
+		}
+		return hex
+	}
+}
+
+/*
 King in check
 5 kyu
 https://www.codewars.com/kata/5e28ae347036fa001a504bbe/train/go
