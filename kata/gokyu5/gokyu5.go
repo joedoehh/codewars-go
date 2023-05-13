@@ -14,14 +14,14 @@ func ProductFib(prod uint64) [3]uint64 {
 	fibs := fib(prod)
 	product := uint64(0)
 	n := 1
-	for product <= prod {
+	for product < prod {
 		product = fibs[n-1] * fibs[n]
 		n += 1
 	}
 	if product == prod {
-		return [3]uint64{fibs[n-1], fibs[n], uint64(1)}
+		return [3]uint64{fibs[n-2], fibs[n-1], uint64(1)}
 	} else {
-		return [3]uint64{fibs[n-1], fibs[n], uint64(0)}
+		return [3]uint64{fibs[n-2], fibs[n-1], uint64(0)}
 	}
 }
 
@@ -35,7 +35,7 @@ func fib(n uint64) (result []uint64) {
 	if n == 2 {
 		return
 	}
-	for i := uint64(3); i <= n; i++ {
+	for i := uint64(3); result[len(result)-1] <= n; i++ {
 		result = append(result, result[i-3]+result[i-2])
 	}
 	return

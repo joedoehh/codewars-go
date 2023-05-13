@@ -18,14 +18,15 @@ func TestGoKyu5(t *testing.T) {
 var _ = Describe("consecutive fib numbers", func() {
 
 	It("should handle basic cases", func() {
-		dotestProdcutFib(4895, [3]uint64{55, 89, 1})
-		dotestProdcutFib(5895, [3]uint64{89, 144, 0})
-		dotestProdcutFib(74049690, [3]uint64{6765, 10946, 1})
-		dotestProdcutFib(84049690, [3]uint64{10946, 17711, 0})
+		dotestProductFib(4895, [3]uint64{55, 89, 1})
+		dotestProductFib(5895, [3]uint64{89, 144, 0})
+		dotestProductFib(74049690, [3]uint64{6765, 10946, 1})
+		dotestProductFib(84049690, [3]uint64{10946, 17711, 0})
+		dotestProductFib(193864606, [3]uint64{10946, 17711, 1})
 	})
 })
 
-func dotestProdcutFib(prod uint64, exp [3]uint64) {
+func dotestProductFib(prod uint64, exp [3]uint64) {
 	var ans = gokyu5.ProductFib(prod)
 	Expect(ans).To(Equal(exp))
 }
