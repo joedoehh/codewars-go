@@ -2,8 +2,53 @@ package gokyu5
 
 import (
 	"fmt"
+	"math"
 	"strconv"
 )
+
+/*
+Buddy Pairs
+5 kyu
+https://www.codewars.com/kata/59ccf051dcc4050f7800008f/train/go
+*/
+func Buddy(start, limit int) []int {
+	for i := start; i <= limit; i++ {
+		divisors := properDivisors(i)
+		buddy := sum(divisors) - 1
+		if (buddy > i) && isBuddyOf(i, buddy) {
+			return []int{i, buddy}
+		}
+	}
+	return []int{}
+}
+
+func isBuddyOf(m int, n int) bool {
+	return sum(properDivisors(n))-1 == m
+}
+
+func sum(divisors map[int]bool) (result int) {
+	result = 0
+	for d := range divisors {
+		result += d
+	}
+	return
+}
+
+func properDivisors(n int) (result map[int]bool) {
+	result = map[int]bool{}
+	if n != 1 {
+		result[n] = true
+	}
+	for i := 2; float64(i) <= math.Sqrt(float64(n)); i++ {
+		if (n % i) == 0 {
+			result[n] = true
+		}
+		if (n % (n / i)) == 0 {
+			result[n/i] = true
+		}
+	}
+	return
+}
 
 /*
 Human Readable Time

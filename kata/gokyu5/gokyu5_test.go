@@ -15,6 +15,27 @@ func TestGoKyu5(t *testing.T) {
 	RunSpecs(t, "GoKyu5 Suite")
 }
 
+// Buddy Pairs ----------------
+
+func arrayToString(a []int, delim string) string {
+	return strings.Join(strings.Split(fmt.Sprint(a), " "), delim)
+}
+func dotestBuddy(start, limit int, exp string) {
+	ans := arrayToString(gokyu5.Buddy(start, limit), " ")
+	fmt.Printf("Expected %s\nGot %s\n", exp, ans)
+	Expect(ans).To(Equal(exp))
+}
+
+var _ = Describe("Buddy Pairs", func() {
+	It("should handle basic cases buddy", func() {
+		dotestBuddy(1071625, 1103735, "[1081184 1331967]")
+		dotestBuddy(57345, 90061, "[62744 75495]")
+		dotestBuddy(2693, 7098, "[5775 6128]")
+		dotestBuddy(6379, 8275, "[]")
+	})
+
+})
+
 // Human Readable Times ----------------
 
 var _ = Describe("Human Readable Times", func() {
