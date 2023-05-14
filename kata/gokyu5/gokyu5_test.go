@@ -15,6 +15,22 @@ func TestGoKyu5(t *testing.T) {
 	RunSpecs(t, "GoKyu5 Suite")
 }
 
+// Find The Smallest ----------------
+
+func dotestSmallest(n int64, exp []int64) {
+	var ans = gokyu5.Smallest(n)
+	Expect(ans).To(Equal(exp))
+}
+
+var _ = Describe("Tests Smallest", func() {
+
+	It("should handle basic cases", func() {
+		dotestSmallest(261235, []int64{126235, 2, 0})
+		dotestSmallest(209917, []int64{29917, 0, 1})
+
+	})
+})
+
 // Buddy Pairs ----------------
 
 func arrayToString(a []int, delim string) string {

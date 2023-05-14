@@ -7,6 +7,63 @@ import (
 )
 
 /*
+Find The Smallest
+5 kyu
+https://www.codewars.com/kata/573992c724fc289553000e95/train/go
+*/
+func Smallest(n int64) []int64 {
+	smallest := n
+	fromIndexSmallest := int64(0)
+	toIndexSmallest := int64(0)
+	digits := digits(n)
+	for fromIndex := 0; fromIndex < len(digits); fromIndex++ {
+		for toIndex := 0; toIndex < len(digits); toIndex++ {
+			if fromIndex == toIndex {
+				continue
+			}
+			permutated := shuffle(digits, fromIndex, toIndex)
+			if permutated < smallest {
+				smallest = permutated
+				fromIndexSmallest = int64(fromIndex)
+				toIndexSmallest = int64(toIndex)
+			}
+		}
+	}
+	return []int64{smallest, fromIndexSmallest, toIndexSmallest}
+}
+
+func shuffle(digits []int64, from int, to int) int64 {
+	asString := ""
+	tmp := digits[from]
+	toIndex := 0
+	fromIndex := 0
+	for toIndex < len(digits) {
+		if fromIndex == from {
+			fromIndex++
+		}
+		if toIndex == to {
+			asString += strconv.FormatInt(tmp, 10)
+			fromIndex--
+		} else {
+			asString += strconv.FormatInt(digits[fromIndex], 10)
+		}
+		toIndex++
+		fromIndex++
+	}
+	returnValue, _ := strconv.Atoi(asString)
+	return int64(returnValue)
+}
+
+func digits(n int64) (result []int64) {
+	result = []int64{}
+	nAsString := strconv.FormatInt(n, 10)
+	for i := 0; i < len(nAsString); i++ {
+		result = append(result, int64(nAsString[i]-48))
+	}
+	return
+}
+
+/*
 Buddy Pairs
 5 kyu
 https://www.codewars.com/kata/59ccf051dcc4050f7800008f/train/go
