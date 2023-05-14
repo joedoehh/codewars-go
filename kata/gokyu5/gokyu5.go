@@ -6,6 +6,18 @@ import (
 )
 
 /*
+Human Readable Time
+5 kyu
+https://www.codewars.com/kata/52685f7382004e774f0001f7/train/go
+*/
+func HumanReadableTime(seconds int) string {
+	s := seconds % 60
+	m := (seconds / 60) % 60
+	h := seconds / 3600
+	return fmt.Sprintf("%02d:%02d:%02d", h, m, s)
+}
+
+/*
 Product of consecutive Fib numbers
 5 kyu
 https://www.codewars.com/kata/5541f58a944b85ce6d00006a/train/go

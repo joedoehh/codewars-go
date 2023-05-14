@@ -15,6 +15,23 @@ func TestGoKyu5(t *testing.T) {
 	RunSpecs(t, "GoKyu5 Suite")
 }
 
+// Human Readable Times ----------------
+
+var _ = Describe("Human Readable Times", func() {
+	It("Sample tests", func() {
+		Expect(gokyu5.HumanReadableTime(0)).To(Equal("00:00:00"))
+		Expect(gokyu5.HumanReadableTime(59)).To(Equal("00:00:59"))
+		Expect(gokyu5.HumanReadableTime(60)).To(Equal("00:01:00"))
+		Expect(gokyu5.HumanReadableTime(90)).To(Equal("00:01:30"))
+		Expect(gokyu5.HumanReadableTime(3599)).To(Equal("00:59:59"))
+		Expect(gokyu5.HumanReadableTime(3600)).To(Equal("01:00:00"))
+		Expect(gokyu5.HumanReadableTime(45296)).To(Equal("12:34:56"))
+		Expect(gokyu5.HumanReadableTime(86399)).To(Equal("23:59:59"))
+		Expect(gokyu5.HumanReadableTime(86400)).To(Equal("24:00:00"))
+		Expect(gokyu5.HumanReadableTime(359999)).To(Equal("99:59:59"))
+	})
+})
+
 // Product of consecutive Fib numbers ----------------
 
 var _ = Describe("consecutive fib numbers", func() {
