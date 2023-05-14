@@ -117,7 +117,142 @@ King in check
 5 kyu
 https://www.codewars.com/kata/5e28ae347036fa001a504bbe/train/go
 */
-func KingIsInCheck(board [8][8]rune) bool {
-	//  Do your magic here
-	return false
+func KingIsInCheck(board [8][8]rune) (inCheck bool) {
+	inCheck = false
+	for i := 0; i < 8; i++ {
+		for j := 0; j < 8; j++ {
+			switch board[i][j] {
+			case '♟':
+				inCheck = checkByPawn(board, i, j)
+			case '♞':
+				inCheck = checkByKnight(board, i, j)
+			case '♜':
+				inCheck = checkByRook(board, i, j)
+			case '♝':
+				inCheck = checkByBishop(board, i, j)
+			case '♛':
+				inCheck = checkByQueen(board, i, j)
+			}
+			if inCheck {
+				return
+			}
+		}
+	}
+	return
+}
+
+func isKing(board [8][8]rune, i int, j int) bool {
+	return onField(board, i, j, '♔')
+}
+
+func isBlockedByNotKing(board [8][8]rune, i int, j int) bool {
+	return !onField(board, i, j, ' ') && !onField(board, i, j, '♔')
+}
+
+func onField(board [8][8]rune, i int, j int, expected rune) bool {
+	return validField(board, i, j) && board[i][j] == expected
+}
+
+func validField(board [8][8]rune, i int, j int) bool {
+	if i < 0 || i >= len(board) || j < 0 || j >= len(board) {
+		return false
+	} else {
+		return true
+	}
+}
+
+func checkByPawn(board [8][8]rune, iPawn int, jPawn int) bool {
+	return isKing(board, iPawn+1, jPawn-1) || isKing(board, iPawn+1, jPawn+1)
+}
+
+func checkByKnight(board [8][8]rune, iKnight int, jKnight int) bool {
+	return isKing(board, iKnight-2, jKnight+1) || isKing(board, iKnight-2, jKnight-1) || isKing(board, iKnight-1, jKnight+2) || isKing(board, iKnight+1, jKnight+2) || isKing(board, iKnight+2, jKnight+1) || isKing(board, iKnight+2, jKnight-1) || isKing(board, iKnight-1, jKnight-2) || isKing(board, iKnight+1, jKnight-2)
+}
+
+func checkByQueen(board [8][8]rune, iQueen int, jQueen int) bool {
+	return checkByRook(board, iQueen, jQueen) || checkByBishop(board, iQueen, jQueen)
+}
+
+func checkByRook(board [8][8]rune, iRook int, jRook int) bool {
+	return checkByRookDirection(board, iRook, jRook, Up) || checkByRookDirection(board, iRook, jRook, Right) || checkByRookDirection(board, iRook, jRook, Down) || checkByRookDirection(board, iRook, jRook, Left)
+}
+
+type StraightDirection int
+
+const (
+	Up    StraightDirection = 0
+	Right StraightDirection = 1
+	Down  StraightDirection = 2
+	Left  StraightDirection = 3
+)
+
+func checkByRookDirection(board [8][8]rune, iRook int, jRook int, dir StraightDirection) (result bool) {
+	result = false
+	nextI := iRook
+	nextJ := jRook
+	for i := 1; ; i++ {
+		switch dir {
+		case Up:
+			nextI -= 1
+		case Down:
+			nextI += 1
+		case Left:
+			nextJ -= 1
+		case Right:
+			nextJ += 1
+		}
+		if !validField(board, nextI, nextJ) || isBlockedByNotKing(board, nextI, nextJ) {
+			result = false
+			break
+		}
+		if isKing(board, nextI, nextJ) {
+			result = true
+			break
+		}
+	}
+	return
+}
+
+func checkByBishop(board [8][8]rune, iBishop int, jBishop int) bool {
+	return checkByBishopDirection(board, iBishop, jBishop, UpRight) || checkByBishopDirection(board, iBishop, jBishop, DownRight) || checkByBishopDirection(board, iBishop, jBishop, UpLeft) || checkByBishopDirection(board, iBishop, jBishop, DownLeft)
+}
+
+type DiagonalDirection int
+
+const (
+	UpRight   DiagonalDirection = 0
+	DownRight DiagonalDirection = 1
+	UpLeft    DiagonalDirection = 2
+	DownLeft  DiagonalDirection = 3
+)
+
+func checkByBishopDirection(board [8][8]rune, iBishop int, jBishop int, dir DiagonalDirection) (result bool) {
+	result = false
+	nextI := iBishop
+	nextJ := jBishop
+	for i := 1; ; i++ {
+		switch dir {
+		case UpRight:
+			nextI -= 1
+			nextJ += 1
+		case DownRight:
+			nextI += 1
+			nextJ += 1
+		case UpLeft:
+			nextI -= 1
+			nextJ -= 1
+		case DownLeft:
+			nextI += 1
+			nextJ -= 1
+		}
+		if !validField(board, nextI, nextJ) || isBlockedByNotKing(board, nextI, nextJ) {
+			result = false
+			break
+		}
+		if isKing(board, nextI, nextJ) {
+			result = true
+			break
+		}
+	}
+	return
 }
