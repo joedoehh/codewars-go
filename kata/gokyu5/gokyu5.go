@@ -37,11 +37,11 @@ func sum(divisors map[int]bool) (result int) {
 func properDivisors(n int) (result map[int]bool) {
 	result = map[int]bool{}
 	if n != 1 {
-		result[n] = true
+		result[1] = true
 	}
 	for i := 2; float64(i) <= math.Sqrt(float64(n)); i++ {
 		if (n % i) == 0 {
-			result[n] = true
+			result[i] = true
 		}
 		if (n % (n / i)) == 0 {
 			result[n/i] = true
