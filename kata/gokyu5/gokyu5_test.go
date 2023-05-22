@@ -15,6 +15,24 @@ func TestGoKyu5(t *testing.T) {
 	RunSpecs(t, "GoKyu5 Suite")
 }
 
+// Nico Variation ----------------
+
+var _ = Describe("Tests Nico", func() {
+	It("Sample tests", func() {
+		dotestNico("crazy", "secretinformation", "cseerntiofarmit on  ")
+		dotestNico("abc", "abcd", "abcd  ")
+		dotestNico("ba", "1234567890", "2143658709")
+		dotestNico("a", "message", "message")
+		dotestNico("key", "key", "eky")
+		dotestNico("abcdefgh", "abcd", "abcd    ")
+
+	})
+})
+
+func dotestNico(key, message, expected string) {
+	Expect(gokyu5.Nico(key, message)).To(Equal(expected), "With key = \"%s\", message = \"%s\"", key, message)
+}
+
 // Find The Smallest ----------------
 
 func dotestSmallest(n int64, exp []int64) {

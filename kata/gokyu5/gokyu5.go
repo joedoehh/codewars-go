@@ -3,8 +3,55 @@ package gokyu5
 import (
 	"fmt"
 	"math"
+	"sort"
 	"strconv"
+	"strings"
 )
+
+/*
+Basic Nico Variation
+5 kyu
+https://www.codewars.com/kata/5968bb83c307f0bb86000015/train/go
+*/
+func Nico(key, message string) (result string) {
+	keyArray := createKey(key)
+	if len(message)%len(key) != 0 {
+		padding := len(key)*((len(message)/len(key))+1) - len(message)
+		for i := 0; i <= padding; i++ {
+			message += " "
+		}
+	}
+	for i := len(key); i <= len(message); i += len(key) {
+		result += encode(message[i-len(key):i], keyArray)
+	}
+	return
+}
+
+func encode(s string, key []byte) (result string) {
+	posMap := make(map[byte]byte)
+	for i := 0; i < len(s); i++ {
+		posMap[key[i]] = s[i]
+	}
+	for i := 0; i < len(key); i++ {
+		result += string(posMap[byte(i+1)])
+	}
+	return
+}
+
+func createKey(keyString string) (key []byte) {
+	key = make([]byte, len(keyString))
+	s := strings.Split(keyString, "")
+	sort.Strings(s)
+	keyMap := make(map[string]int)
+	for i := 0; i < len(s); i++ {
+		keyMap[s[i]] = i + 1
+	}
+	for i := 0; i < len(keyString); i++ {
+		nextString := string(keyString[i])
+		key[i] = byte(keyMap[nextString])
+	}
+	return
+}
 
 /*
 Find The Smallest
