@@ -15,6 +15,47 @@ func TestGoKyu5(t *testing.T) {
 	RunSpecs(t, "GoKyu5 Suite")
 }
 
+// Fibo Akin   ----------------
+
+func dotestLengthSupUk(n, k int, exp int) {
+	var ans = gokyu5.LengthSupUk(n, k)
+	Expect(ans).To(Equal(exp))
+}
+func dotestComp(n int, exp int) {
+	var ans = gokyu5.Comp(n)
+	Expect(ans).To(Equal(exp))
+}
+
+func dotestU(n int, exp int) {
+	var ans = gokyu5.U(n)
+	Expect(ans).To(Equal(exp))
+}
+
+var _ = Describe("Test Fibo Akin", func() {
+	It("U function", func() {
+		dotestU(1, 1)
+		dotestU(2, 1)
+		dotestU(3, 2)
+		dotestU(4, 3)
+		dotestU(5, 3)
+		dotestU(6, 4)
+		dotestU(900, 455)
+		dotestU(90000, 44337)
+	})
+	It("should handle basic cases LengthSupUk", func() {
+		dotestLengthSupUk(23, 12, 4)
+		dotestLengthSupUk(50, 25, 2)
+		dotestLengthSupUk(3332, 973, 1391)
+	})
+	It("should handle basic cases Comp", func() {
+		dotestComp(23, 1)
+		dotestComp(100, 22)
+		dotestComp(200, 63)
+		dotestComp(74626, 37128)
+		dotestComp(71749, 35692)
+	})
+})
+
 // Help Granny ----------------
 
 func dotestGranny(arrFriends []string, ftwns map[string]string, h map[string]float64, exp int) {

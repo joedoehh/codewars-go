@@ -9,6 +9,56 @@ import (
 )
 
 /*
+Fibo akin
+5 kyu
+https://www.codewars.com/kata/5772382d509c65de7e000982/train/go
+*/
+func LengthSupUk(n, k int) (count int) {
+	U(n)
+	count = 0
+	for i := 1; i <= n; i++ {
+		if U(i) >= k {
+			count += 1
+		}
+	}
+	return
+}
+
+func Comp(n int) (count int) {
+	U(n)
+	count = 0
+	for i := 2; i <= n; i++ {
+		if U(i) < U(i-1) {
+			count += 1
+		}
+	}
+	return
+}
+
+var uCache map[int]int = map[int]int{1: 1, 2: 1}
+
+func U(n int) (u int) {
+	u, exists := uCache[n]
+	if !exists {
+		u = computeU(n)
+		uCache[n] = u
+	}
+	return
+}
+
+func computeU(n int) int {
+	series := []int{1, 1}
+	for i := 2; i < n; i++ {
+		index1 := i - series[i-1]
+		index2 := i - series[i-2]
+		newValue := series[index1] + series[index2]
+		series = append(series, newValue)
+		uCache[i+1] = newValue
+	}
+	return series[n-1]
+}
+
+/*
 Help your granny
 5 kyu
 https://www.codewars.com/kata/5536a85b6ed4ee5a78000035/train/go
