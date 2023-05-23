@@ -9,11 +9,40 @@ import (
 )
 
 /*
+Help your granny
+5 kyu
+https://www.codewars.com/kata/5536a85b6ed4ee5a78000035/train/go
+*/
+func Tour(arrFriends []string, ftwns map[string]string, h map[string]float64) int {
+	distance := 0.
+	lastDistance := -1.
+	for _, nextFriend := range arrFriends {
+		// get distance to town (ans skip unknown towns)
+		nextTwn, known := ftwns[nextFriend]
+		if !known {
+			continue
+		}
+		nextDistance, known := h[nextTwn]
+		if !known {
+			continue
+		}
+		// add distance: special case first distance, compute otherwise
+		if lastDistance < 0 {
+			distance += nextDistance
+		} else {
+			distance += math.Sqrt(nextDistance*nextDistance - lastDistance*lastDistance)
+		}
+		lastDistance = nextDistance
+	}
+	distance += lastDistance
+	return int(distance)
+}
+
+/*
 John/ann Sign Up Codewars
 5 kyu
 https://www.codewars.com/kata/57591ef494aba64d14000526/train/go
 */
-
 func Ann(n int) []int {
 	_, a := createKataSeries(n, []int{0}, []int{1})
 	return a
