@@ -15,6 +15,66 @@ func TestGoKyu5(t *testing.T) {
 	RunSpecs(t, "GoKyu5 Suite")
 }
 
+// Peaks ----------------
+
+func dotestPeaks(array []int, expected gokyu5.PosPeaks) {
+	var ans = gokyu5.PickPeaks(array)
+	if len(expected.Pos) == 0 {
+		if len(ans.Pos) != 0 || len(ans.Peaks) != 0 {
+			Expect(ans).To(Equal(expected))
+		} else {
+			Expect(true).To(BeTrue())
+		}
+	} else {
+		Expect(ans).To(Equal(expected))
+	}
+}
+
+var _ = Describe("Test Example", func() {
+
+	It("should support finding peaks, despite the plateau", func() {
+		dotestPeaks(
+			[]int{2, 1, 3, 2, 2, 2, 2, 1},
+			gokyu5.PosPeaks{Pos: []int{2}, Peaks: []int{3}},
+		)
+	})
+
+	It("should support finding peaks", func() {
+		dotestPeaks(
+			[]int{1, 2, 3, 6, 4, 1, 2, 3, 2, 1},
+			gokyu5.PosPeaks{Pos: []int{3, 7}, Peaks: []int{6, 3}},
+		)
+	})
+
+	It("should support finding peaks, but should ignore peaks on the edge of the array", func() {
+		dotestPeaks(
+			[]int{3, 2, 3, 6, 4, 1, 2, 3, 2, 1, 2, 3},
+			gokyu5.PosPeaks{Pos: []int{3, 7}, Peaks: []int{6, 3}},
+		)
+	})
+
+	It("should support finding peaks; if the peak is a plateau, it should only return the position of the first element of the plateau", func() {
+		dotestPeaks(
+			[]int{3, 2, 3, 6, 4, 1, 2, 3, 2, 1, 2, 2, 2, 1},
+			gokyu5.PosPeaks{Pos: []int{3, 7, 10}, Peaks: []int{6, 3, 2}},
+		)
+	})
+
+	It("should support finding peaks; if the peak is a plateau, it should only return the position of the first element of the plateau", func() {
+		dotestPeaks(
+			[]int{2, 1, 3, 1, 2, 2, 2, 2, 1},
+			gokyu5.PosPeaks{Pos: []int{2, 4}, Peaks: []int{3, 2}},
+		)
+	})
+
+	It("should support finding peaks, but should ignore peaks on the edge of the array", func() {
+		dotestPeaks(
+			[]int{2, 1, 3, 1, 2, 2, 2, 2},
+			gokyu5.PosPeaks{Pos: []int{2}, Peaks: []int{3}},
+		)
+	})
+})
+
 // Coding squared String ----------------
 
 func dotestCode(a1 string, exp string) {

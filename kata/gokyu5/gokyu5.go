@@ -9,6 +9,55 @@ import (
 )
 
 /*
+Pick peaks
+5 kyu
+https://www.codewars.com/kata/5279f6fe5ab7f447890006a7/train/go
+*/
+type PosPeaks struct {
+	Pos   []int
+	Peaks []int
+}
+
+func PickPeaks(array []int) (result PosPeaks) {
+	fmt.Printf("Peak Array: %v\n", array)
+	delta := []string{}
+	// derive ups´n´downs
+	for i := 1; i < len(array); i++ {
+		if array[i] > array[i-1] {
+			delta = append(delta, "+")
+		} else if array[i] < array[i-1] {
+			delta = append(delta, "-")
+		} else {
+			delta = append(delta, "=")
+		}
+
+	}
+	// collect peaks
+	result.Pos = make([]int, 0)
+	result.Peaks = make([]int, 0)
+	posPlateau := -1
+	peaksPlateau := -1
+	for i := 1; i < len(delta); i++ {
+		if delta[i-1] == "+" && delta[i] == "=" {
+			posPlateau = i
+			peaksPlateau = array[i]
+		} else if delta[i-1] == "+" && delta[i] == "-" {
+			result.Pos = append(result.Pos, i)
+			result.Peaks = append(result.Peaks, array[i])
+		} else if delta[i-1] == "=" && delta[i] == "-" {
+			if posPlateau == -1 {
+				continue
+			}
+			result.Pos = append(result.Pos, posPlateau)
+			result.Peaks = append(result.Peaks, peaksPlateau)
+			posPlateau = -1
+			peaksPlateau = -1
+		}
+	}
+	return
+}
+
+/*
 Coding squared string
 5 kyu
 https://www.codewars.com/kata/56fcc393c5957c666900024d/train/go
