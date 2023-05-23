@@ -15,6 +15,43 @@ func TestGoKyu5(t *testing.T) {
 	RunSpecs(t, "GoKyu5 Suite")
 }
 
+// Coding squared String ----------------
+
+func dotestCode(a1 string, exp string) {
+	var ans = gokyu5.Code(a1)
+	Expect(ans).To(Equal(exp))
+}
+func dotestDecode(a1 string, exp string) {
+	var ans = gokyu5.Decode(a1)
+	Expect(ans).To(Equal(exp))
+}
+
+var _ = Describe("Tests Squared Code, Decode", func() {
+
+	It("should handle basic cases", func() {
+		var d = "abcdefg"
+		var s = "gda\n\veb\n\vfc"
+		dotestCode(d, s)
+		dotestDecode(s, d)
+
+		d = "I.was.going.fishing.that.morning.at.ten.o'clock"
+		s = "c.nhsoI\nltiahi.\noentinw\ncng.nga\nk..mg.s\n\voao.f.\n\v'trtig"
+		dotestCode(d, s)
+		dotestDecode(s, d)
+
+		d = "Process terminated with status 0 (0 minute(s), 6 second(s))"
+		s = "s t setP\n)se(tder\n)e(0a ro\n\vcs twmc\n\vo)muiie\n\vn,istns\n\vd n has\n\v(6u0 t "
+		dotestCode(d, s)
+		dotestDecode(s, d)
+
+		d = ""
+		s = ""
+		dotestCode(d, s)
+		dotestDecode(s, d)
+
+	})
+})
+
 // Fibo Akin   ----------------
 
 func dotestLengthSupUk(n, k int, exp int) {

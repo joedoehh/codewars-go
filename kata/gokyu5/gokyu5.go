@@ -9,6 +9,90 @@ import (
 )
 
 /*
+Coding squared string
+5 kyu
+https://www.codewars.com/kata/56fcc393c5957c666900024d/train/go
+*/
+func Code(s string) (coded string) {
+	fmt.Printf("Code INPUT: %q\n", s)
+	if s == "" {
+		return ""
+	}
+	// determine square size and padding missing chars
+	n := squareSize(s, true)
+	s += strings.Repeat("\v", n*n-len(s))
+	// square string
+	square := make([][]byte, n)
+	for i := range square {
+		square[i] = make([]byte, n)
+		for j := range square[i] {
+			square[i][j] = s[i*n+j]
+		}
+	}
+	// rotate square 90 degree clockwise
+	squareRotated := make([][]byte, n)
+	for i := range square {
+		squareRotated[i] = make([]byte, n)
+		for j := range square[i] {
+			squareRotated[i][j] = square[n-j-1][i]
+		}
+	}
+	// convert square to code string
+	for i := range square {
+		for j := range square[i] {
+			coded += string(squareRotated[i][j])
+		}
+		if i != n-1 {
+			coded += "\n"
+		}
+	}
+	return
+}
+
+func Decode(s string) (decoded string) {
+	fmt.Printf("Decode: %q\n", s)
+	if s == "" {
+		return ""
+	}
+	// determine square size (remove \n)
+	s = strings.ReplaceAll(s, "\n", "")
+	n := squareSize(s, false)
+	// square string
+	square := make([][]byte, n)
+	for i := range square {
+		square[i] = make([]byte, n)
+		for j := range square[i] {
+			square[i][j] = s[i*n+j]
+		}
+	}
+	// rotate square 90 degree counter-clockwise
+	squareRotated := make([][]byte, n)
+	for i := range square {
+		squareRotated[i] = make([]byte, n)
+		for j := range square[i] {
+			squareRotated[i][j] = square[j][n-i-1]
+		}
+	}
+	// convert square to decode string
+	for i := range square {
+		for j := range square[i] {
+			decoded += string(squareRotated[i][j])
+		}
+	}
+	decoded = strings.ReplaceAll(decoded, "\v", "")
+	return
+}
+
+func squareSize(s string, ceil bool) int {
+	sqrt := math.Sqrt(float64(len(s)))
+	if ceil {
+		return int(sqrt) + 1
+	} else {
+		return int(sqrt)
+	}
+}
+
+/*
 Fibo akin
 5 kyu
 https://www.codewars.com/kata/5772382d509c65de7e000982/train/go
