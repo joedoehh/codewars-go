@@ -9,6 +9,67 @@ import (
 )
 
 /*
+Best travel
+5 kyu
+https://www.codewars.com/kata/55e7280b40e1c4a06d0000aa/train/go
+*/
+func ChooseBestSum(t, k int, ls []int) (bestSum int) {
+	fmt.Printf("Best Sum: t=%d, k=%d, ls=%v\n", t, k, ls)
+	bestSum = -1
+	for _, nextSubset := range allSubsets(len(ls)) {
+		tourStops := getSubset(ls, nextSubset)
+		if len(tourStops) == k {
+			tourSum := tourSum(tourStops)
+			if tourSum <= t && tourSum > bestSum {
+				bestSum = tourSum
+			}
+		}
+	}
+	return
+}
+
+func allSubsets(n int) (result [][]int) {
+	prefixes := []string{""}
+	for i := 0; i < n; i++ {
+		newPrefixes := []string{}
+		for _, v := range prefixes {
+			newPrefixes = append(newPrefixes, "1"+v)
+			newPrefixes = append(newPrefixes, "0"+v)
+		}
+		prefixes = newPrefixes
+	}
+	for _, v := range prefixes {
+		nextSubset := []int{}
+		for _, c := range v {
+			if c == 48 {
+				nextSubset = append(nextSubset, 0)
+			} else {
+				nextSubset = append(nextSubset, 1)
+			}
+		}
+		result = append(result, nextSubset)
+	}
+	return
+}
+
+func getSubset(orig, p []int) []int {
+	result := []int{}
+	for i, v := range p {
+		if v == 1 {
+			result = append(result, orig[i])
+		}
+	}
+	return result
+}
+
+func tourSum(tour []int) (sum int) {
+	for _, v := range tour {
+		sum += v
+	}
+	return
+}
+
+/*
 Pick peaks
 5 kyu
 https://www.codewars.com/kata/5279f6fe5ab7f447890006a7/train/go
