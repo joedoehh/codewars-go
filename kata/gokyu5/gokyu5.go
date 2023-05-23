@@ -9,6 +9,50 @@ import (
 )
 
 /*
+John/ann Sign Up Codewars
+5 kyu
+https://www.codewars.com/kata/57591ef494aba64d14000526/train/go
+*/
+
+func Ann(n int) []int {
+	_, a := createKataSeries(n, []int{0}, []int{1})
+	return a
+}
+
+func John(n int) []int {
+	j, _ := createKataSeries(n, []int{0}, []int{1})
+	return j
+}
+
+func SumJohn(n int) (result int) {
+	result = 0
+	for _, v := range John(n) {
+		result += v
+	}
+	return
+}
+
+func SumAnn(n int) (result int) {
+	result = 0
+	for _, v := range Ann(n) {
+		result += v
+	}
+	return
+}
+
+func createKataSeries(nLimit int, j, a []int) (jSeries, aSeries []int) {
+	for n := 1; n < nLimit; n++ {
+		newJ := n - a[j[n-1]]
+		j = append(j, newJ)
+		newA := n - j[a[n-1]]
+		a = append(a, newA)
+	}
+	jSeries = j
+	aSeries = a
+	return
+}
+
+/*
 Basic Nico Variation
 5 kyu
 https://www.codewars.com/kata/5968bb83c307f0bb86000015/train/go
