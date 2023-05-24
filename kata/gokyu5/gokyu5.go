@@ -9,6 +9,53 @@ import (
 )
 
 /*
+Integers Recreation One
+5 kyu
+https://www.codewars.com/kata/55aa075506463dac6600010d/train/go
+*/
+func ListSquared(m, n int) (result [][]int) {
+	result = make([][]int, 0)
+	for i := m; i <= n; i++ {
+		square := findSquared(i)
+		if square != -1 {
+			result = append(result, []int{i, square})
+		}
+	}
+	return
+}
+
+func findSquared(n int) (result int) {
+	result = squaredSum(findDivisors(n))
+	if !isSquare(result) {
+		result = -1
+	}
+	return
+}
+
+func findDivisors(n int) (result []int) {
+	result = []int{1}
+	for i := 2; i <= n; i++ {
+		if n%i == 0 {
+			result = append(result, i)
+		}
+	}
+	return
+}
+
+func squaredSum(ns []int) (result int) {
+	result = 0
+	for _, v := range ns {
+		result += v * v
+	}
+	return
+}
+
+func isSquare(n int) bool {
+	sqrt := int(math.Sqrt(float64(n)))
+	return sqrt*sqrt == n
+}
+
+/*
 Weight For Weight
 5 kyu
 https://www.codewars.com/kata/55c6126177c9441a570000cc/train/go

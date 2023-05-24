@@ -15,6 +15,22 @@ func TestGoKyu5(t *testing.T) {
 	RunSpecs(t, "GoKyu5 Suite")
 }
 
+// List Squared ----------------
+
+func dotestSquared(m, n int, exp [][]int) {
+	var ans = gokyu5.ListSquared(m, n)
+	Expect(ans).To(Equal(exp))
+}
+
+var _ = Describe("List Squared", func() {
+
+	It("should handle basic cases", func() {
+		dotestSquared(1, 250, [][]int{{1, 1}, {42, 2500}, {246, 84100}})
+		dotestSquared(250, 500, [][]int{{287, 84100}})
+		dotestSquared(300, 600, [][]int{})
+	})
+})
+
 // Weight For Weight ----------------
 
 func dotestOrderWeight(s string, exp string) {
