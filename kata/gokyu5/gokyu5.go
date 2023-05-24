@@ -9,6 +9,37 @@ import (
 )
 
 /*
+Direction Reduction
+5 kyu
+https://www.codewars.com/kata/550f22f4d758534c1100025a/train/go
+*/
+func DirReduc(arr []string) (compressed []string) {
+	fmt.Printf("Direction Reduce: arr=%v\n", arr)
+	for {
+		lastDir := ""
+		for _, nextDir := range arr {
+			if reduce(lastDir, nextDir) {
+				compressed = compressed[:len(compressed)-1]
+				lastDir = ""
+			} else {
+				compressed = append(compressed, nextDir)
+				lastDir = nextDir
+			}
+		}
+		if len(arr) == len(compressed) {
+			return
+		} else {
+			arr = compressed
+			compressed = []string{}
+		}
+	}
+}
+
+func reduce(s, t string) bool {
+	return (s == "NORTH" && t == "SOUTH") || (s == "SOUTH" && t == "NORTH") || (s == "EAST" && t == "WEST") || (s == "WEST" && t == "EAST")
+}
+
+/*
 Best travel
 5 kyu
 https://www.codewars.com/kata/55e7280b40e1c4a06d0000aa/train/go

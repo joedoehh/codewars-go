@@ -15,6 +15,29 @@ func TestGoKyu5(t *testing.T) {
 	RunSpecs(t, "GoKyu5 Suite")
 }
 
+// Direction Reduction ----------------
+
+func dotestDirReduc(arr []string, exp []string) {
+	var ans = gokyu5.DirReduc(arr)
+	Expect(ans).To(Equal(exp))
+}
+
+var _ = Describe("Tests DirReduc", func() {
+
+	It("should handle basic cases", func() {
+		var a = []string{"NORTH", "SOUTH", "EAST", "WEST"}
+		dotestDirReduc(a, []string{})
+		a = []string{"NORTH", "SOUTH", "SOUTH", "EAST", "WEST", "NORTH", "WEST"}
+		dotestDirReduc(a, []string{"WEST"})
+		a = []string{"NORTH", "WEST", "SOUTH", "EAST"}
+		dotestDirReduc(a, []string{"NORTH", "WEST", "SOUTH", "EAST"})
+		a = []string{"NORTH", "SOUTH", "SOUTH", "EAST", "WEST", "NORTH", "NORTH"}
+		dotestDirReduc(a, []string{"NORTH"})
+		a = []string{"WEST", "WEST", "EAST", "EAST", "WEST", "SOUTH", "NORTH", "SOUTH"}
+		dotestDirReduc(a, []string{"WEST", "SOUTH"})
+	})
+})
+
 // Best Travel ----------------
 
 func dotestTravel(t, k int, ls []int, exp int) {
