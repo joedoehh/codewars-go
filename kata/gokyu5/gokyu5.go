@@ -9,6 +9,47 @@ import (
 )
 
 /*
+Weight For Weight
+5 kyu
+https://www.codewars.com/kata/55c6126177c9441a570000cc/train/go
+*/
+func OrderWeight(strng string) string {
+	if strng == "" {
+		return ""
+	}
+	array := strings.Fields(strng)
+	sort.Sort(sortedWeights(array))
+	return strings.Join(array, " ")
+}
+
+type sortedWeights []string
+
+func (a sortedWeights) Len() int {
+	return len(a)
+}
+
+func (a sortedWeights) Less(i, j int) bool {
+	csi := checksum(a[i])
+	csj := checksum(a[j])
+	if csi == csj {
+		return a[i] < a[j]
+	} else {
+		return csi < csj
+	}
+}
+
+func (a sortedWeights) Swap(i, j int) {
+	a[i], a[j] = a[j], a[i]
+}
+
+func checksum(s string) (checksum int) {
+	for _, v := range s {
+		checksum += int(v) - 48
+	}
+	return
+}
+
+/*
 Direction Reduction
 5 kyu
 https://www.codewars.com/kata/550f22f4d758534c1100025a/train/go
