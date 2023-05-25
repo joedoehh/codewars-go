@@ -9,6 +9,49 @@ import (
 )
 
 /*
+Last digit for a large number
+5 kyu
+https://www.codewars.com/kata/5511b2f550906349a70004e1/train/go
+*/
+func LastDigit(n1, n2 string) int {
+	lenN1 := len(n1)
+	lenN2 := len(n2)
+	// a and b are both 0
+	if lenN1 == 1 && lenN2 == 1 && n1[0] == '0' && n2[0] == '0' {
+		return 1
+	}
+	// if exponent is 0
+	if lenN2 == 1 && n2[0] == '0' {
+		return 1
+	}
+
+	// if base is 0
+	if lenN1 == 1 && n1[0] == '0' {
+		return 0
+	}
+
+	// if exponent is divisible by 4 then last digit will be pow(n1, 4) % 10
+	// else last digit will be pow(n1, n2%4) % 10
+	exp := modulo(4, n2)
+	if exp == 0 {
+		exp = 4
+	}
+
+	// find last digit in n1 and compute its exponent
+	lastDigit := n1[lenN1-1] - '0'
+	result := int(math.Pow(float64(lastDigit), float64(exp)))
+	return result % 10
+}
+
+func modulo(a int, b string) (mod int) {
+	mod = 0
+	for i := 0; i < len(b); i++ {
+		mod = (mod*10 + int(b[i]-'0')) % a
+	}
+	return
+}
+
+/*
 Integers Recreation One
 5 kyu
 https://www.codewars.com/kata/55aa075506463dac6600010d/train/go
