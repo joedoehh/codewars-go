@@ -9,6 +9,28 @@ import (
 )
 
 /*
+count ip addresses
+5 kyu
+https://www.codewars.com/kata/526989a41034285187000de4/train/go
+*/
+func IpsBetween(start, end string) int {
+	fmt.Printf("IP: start=%v -  end=%v\n", start, end)
+	return int(ipToNumber(end)) - int(ipToNumber(start))
+}
+
+func ipToNumber(s string) (result int64) {
+	binary := ""
+	for _, v := range strings.Split(s, ".") {
+		value, _ := strconv.Atoi(v)
+		oktet := fmt.Sprintf("%b", value)
+		oktetPadded := strings.Repeat("0", 8-len(oktet)) + oktet
+		binary += oktetPadded
+	}
+	result, _ = strconv.ParseInt(binary, 2, 64)
+	return
+}
+
+/*
 int32 to ipv4
 5 kyu
 https://www.codewars.com/kata/52e88b39ffb6ac53a400022e/train/go
@@ -16,7 +38,6 @@ https://www.codewars.com/kata/52e88b39ffb6ac53a400022e/train/go
 func Int32ToIp(n uint32) (result string) {
 	binary := fmt.Sprintf("%b", n)
 	binaryPadded := strings.Repeat("0", 32-len(binary)) + binary
-	fmt.Printf("%v == %v\n", n, binaryPadded)
 	oktet1, _ := strconv.ParseInt(binaryPadded[0:8], 2, 16)
 	oktet2, _ := strconv.ParseInt(binaryPadded[8:16], 2, 16)
 	oktet3, _ := strconv.ParseInt(binaryPadded[16:24], 2, 16)

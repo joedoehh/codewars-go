@@ -16,7 +16,19 @@ func TestGoKyu5(t *testing.T) {
 	RunSpecs(t, "GoKyu5 Suite")
 }
 
+// count ip adresses ----------------
+var _ = Describe("Test IP4 adresses", func() {
+
+	It("should handle basic cases", func() {
+		Expect(gokyu5.IpsBetween("150.0.0.0", "150.0.0.1")).To(Equal(1))
+		Expect(gokyu5.IpsBetween("10.0.0.0", "10.0.0.50")).To(Equal(50))
+		Expect(gokyu5.IpsBetween("20.0.0.10", "20.0.1.0")).To(Equal(246))
+		Expect(gokyu5.IpsBetween("150.0.0.0", "150.0.0.0")).To(Equal(0))
+	})
+})
+
 // int32 to IPv4 ----------------
+
 var _ = Describe("Tests IPv4", func() {
 	It("Sample tests", func() {
 		Expect(gokyu5.Int32ToIp(math.MaxUint32)).To(Equal("255.255.255.255"))
