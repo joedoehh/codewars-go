@@ -9,6 +9,23 @@ import (
 )
 
 /*
+int32 to ipv4
+5 kyu
+https://www.codewars.com/kata/52e88b39ffb6ac53a400022e/train/go
+*/
+func Int32ToIp(n uint32) (result string) {
+	binary := fmt.Sprintf("%b", n)
+	binaryPadded := strings.Repeat("0", 32-len(binary)) + binary
+	fmt.Printf("%v == %v\n", n, binaryPadded)
+	oktet1, _ := strconv.ParseInt(binaryPadded[0:8], 2, 16)
+	oktet2, _ := strconv.ParseInt(binaryPadded[8:16], 2, 16)
+	oktet3, _ := strconv.ParseInt(binaryPadded[16:24], 2, 16)
+	oktet4, _ := strconv.ParseInt(binaryPadded[24:], 2, 16)
+	result = fmt.Sprintf("%v.%v.%v.%v", oktet1, oktet2, oktet3, oktet4)
+	return
+}
+
+/*
 Last digit for a large number
 5 kyu
 https://www.codewars.com/kata/5511b2f550906349a70004e1/train/go

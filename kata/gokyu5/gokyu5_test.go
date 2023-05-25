@@ -3,6 +3,7 @@ package gokyu5_test
 import (
 	"codewars-go/kata/gokyu5"
 	"fmt"
+	"math"
 	"strings"
 	"testing"
 
@@ -14,6 +15,17 @@ func TestGoKyu5(t *testing.T) {
 	RegisterFailHandler(Fail)
 	RunSpecs(t, "GoKyu5 Suite")
 }
+
+// int32 to IPv4 ----------------
+var _ = Describe("Tests IPv4", func() {
+	It("Sample tests", func() {
+		Expect(gokyu5.Int32ToIp(math.MaxUint32)).To(Equal("255.255.255.255"))
+		Expect(gokyu5.Int32ToIp(2149583361)).To(Equal("128.32.10.1"))
+		Expect(gokyu5.Int32ToIp(2154959208)).To(Equal("128.114.17.104"))
+		Expect(gokyu5.Int32ToIp(0)).To(Equal("0.0.0.0"))
+
+	})
+})
 
 // last digit of a large number ----------------
 
